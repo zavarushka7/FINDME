@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FIND ME</string>
+    <string name="start_button">Начать игру</string>
+    <string name="connect_button">Подключиться к игре</string>
+    <string name="settings_button">Настройки</string>
+    <string name="change_button">Изменить профиль</string>
+    <string name="volume_button">Звук</string>
+    <string name="animation_button">Предыстория</string>
+    <string name="friends">Друзья</string>
+    <string name="strangers">Незнакомцы</string>
+    <string name="select_mode">Выберете режим игры</string>
+    <string name="code">Код для подключения</string>
+    <string name="connect">Введите код</string>
+    <string name="name">Имя пользователя</string>
+    <string name="avatar">Аватарка</string>
+</resources>
