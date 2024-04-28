@@ -1,37 +1,76 @@
 package com.bignerdranch.android.findme
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 
 class Connect : AppCompatActivity() {
+    private lateinit var code: EditText
+    private lateinit var connectButton: ImageButton
+    private lateinit var database: DatabaseReference
+    private lateinit var database2: DatabaseReference
+    var gameKey: String? = null
 
-    private lateinit var connectButton: Button
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_connect)
 
-        val codeEditText: EditText = findViewById(R.id.editText)
-        val connectButton: Button = findViewById(R.id.connect_button)
-        val receivedRandomNumber = intent.getIntExtra("randomNumber", 0)
-        connectButton.setOnClickListener { view: View ->
+        connectButton = findViewById(R.id.connect_button)
+        code = findViewById(R.id.randomcode)
+        database = FirebaseDatabase.getInstance().reference.child("game")
+        database2 = FirebaseDatabase.getInstance().reference.child("users")
+        connectButton.setOnClickListener {
+            val userInput = code.text.toString()
+            var codeMatched = false
+            database.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (childSnapshot in dataSnapshot.children) {
+                        val gameCode = childSnapshot.child("code").getValue(Int::class.java)
+                        if (gameCode != null && gameCode == userInput.toInt()) {
+                            codeMatched = true
+                            gameKey = childSnapshot.key
+                            break
+                        }
+                    }
+                    if (codeMatched) {
+                        gameKey?.let { key ->
 
-            val enteredCode = codeEditText.text.toString()
-            if (enteredCode == receivedRandomNumber.toString()) {
-                val intent = Intent(this, Wait::class.java)
-                startActivity(intent)
+                            val key_player = intent.getStringExtra("name")
+                            val playersRef = database.child(key).child("players")
+                            val playerCount = dataSnapshot.child(key).child("count").getValue(Int::class.java) ?: 0
+                            val playerData = hashMapOf<String, Any>()
+                            playerData["name"] = key_player.toString()
+                            playersRef.child("player${playerCount + 1}").setValue(playerData)
 
-            } else {
-                // Если введенный код неверен
-                Toast.makeText(this, "Неправильный код", Toast.LENGTH_SHORT).show()
-            }
+                            val countRef = database.child(key).child("count")
+                            countRef.setValue(playerCount + 1)
+
+                            val intent = Intent(this@Connect, Wait2::class.java)
+                            startActivity(intent)
+                        }
+                    } else {
+                        Toast.makeText(this@Connect, "Codes do not match!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Обработка ошибки
+                }
+            })
         }
     }
 }

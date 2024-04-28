@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 
 class Menu : AppCompatActivity() {
-    private lateinit var startButton: Button
-    private lateinit var connectButton: Button
-    private lateinit var settingsButton: Button
+    private lateinit var startButton: ImageButton
+    private lateinit var connectButton: ImageButton
+    private lateinit var settingsButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +21,11 @@ class Menu : AppCompatActivity() {
         settingsButton = findViewById(R.id.settings_button)
 
         startButton.setOnClickListener { view: View ->
-            val intent = Intent(this, Start::class.java)
+            val intent = Intent(this, SettingsProfile::class.java)
             startActivity(intent)
         }
         connectButton.setOnClickListener { view: View ->
-            val intent = Intent(this, Connect::class.java)
+            val intent = Intent(this, SettingsProfile2::class.java)
             startActivity(intent)
         }
         settingsButton.setOnClickListener { view: View ->

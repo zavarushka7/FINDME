@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 
 class Start : AppCompatActivity() {
 
-    private lateinit var friendsButton: Button
-    private lateinit var strangersButton: Button
+    private lateinit var friendsButton: ImageButton
+    private lateinit var strangersButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

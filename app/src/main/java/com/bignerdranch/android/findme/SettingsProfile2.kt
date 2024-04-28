@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
-class SettingsProfile : AppCompatActivity() {
+class SettingsProfile2 : AppCompatActivity() {
 
     private lateinit var horseButton: ImageButton
     private lateinit var horse2Button: ImageView
@@ -93,19 +93,19 @@ class SettingsProfile : AppCompatActivity() {
                 val key = newDatabaseReference.key
 
                 // Создание объекта пользователя и добавление информации в базу данных Firebase
-                val user = User(key.toString(), userName, selectedAvatar!!, "admin")
+                val user = User(key.toString(), userName, selectedAvatar!!, "player")
                 if (key != null) {
                     database.child("users").child(key).setValue(user)
                 }
 
                 // Запуск активити GetCode с передачей уникального ключа в Intent
-                val intent = Intent(this@SettingsProfile, GetCode::class.java)
-                val intent2 = Intent(this@SettingsProfile, Wait::class.java)
-                intent.putExtra("key", key)
-                intent2.putExtra("key2", key)
+                val intent = Intent(this@SettingsProfile2, Connect::class.java)
+                intent.putExtra("name", key)
                 startActivity(intent)
             }
         }
+
+
 
     }
     data class User(val key: String, val name: String, val avatar: String, val status: String)
