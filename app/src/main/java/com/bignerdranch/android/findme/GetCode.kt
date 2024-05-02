@@ -1,5 +1,6 @@
 package com.bignerdranch.android.findme
 
+import Wait
 import android.content.Intent
 import android.os.Bundle
 import android.view.View

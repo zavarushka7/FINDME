@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FINDME"
         tools:targetApi="31">
         <activity
+            android:name=".Wait"
+            android:exported="false" />
+        <activity
             android:name=".Wait2"
             android:exported="false" />
         <activity
@@ -50,9 +53,6 @@
             android:exported="false" />
         <activity
             android:name=".Settings"
-            android:exported="false" />
-        <activity
-            android:name=".Wait"
             android:exported="false" />
         <activity
             android:name=".Connect"

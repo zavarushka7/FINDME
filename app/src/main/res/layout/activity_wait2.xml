@@ -6,5 +6,5 @@
     android:background="@drawable/phoneyellow"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Start">
+    tools:context=".Wait2">
 </androidx.constraintlayout.widget.ConstraintLayout>
