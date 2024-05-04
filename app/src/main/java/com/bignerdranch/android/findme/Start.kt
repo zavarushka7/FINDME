@@ -1,10 +1,9 @@
 package com.bignerdranch.android.findme
-
+// Активити показывает сводку правил о режимах игры
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 
 class Start : AppCompatActivity() {

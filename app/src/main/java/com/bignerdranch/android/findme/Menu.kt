@@ -1,10 +1,9 @@
 package com.bignerdranch.android.findme
-
+//Активити меню с тремя кнопками "Начать игру", "Подключиться к игре", "Настройки".
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 
 class Menu : AppCompatActivity() {

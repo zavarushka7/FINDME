@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+//Анимация которая появляется при самом первом запуске игры и которую можно пересмотреть в настройках
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

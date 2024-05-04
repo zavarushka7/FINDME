@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+//Первое активити, появляющееся при загрузке приложения.
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+//Активити в котором можно включить\выключить звуки игры
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

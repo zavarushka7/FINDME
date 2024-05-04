@@ -1,17 +1,15 @@
 package com.bignerdranch.android.findme
-
+// Активити, в котором игрок выбирает имя и аватарку.
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
 class SettingsProfile2 : AppCompatActivity() {
@@ -53,8 +51,22 @@ class SettingsProfile2 : AppCompatActivity() {
         bird2Button = findViewById(R.id.bird2_button)
 
         database = Firebase.database.reference
-        val imageButtons = listOf<ImageButton>(birdButton, horseButton, rabbitButton, sheepButton, owlButton, bearButton)
-        val imageViews = listOf<View>(bird2Button, horse2Button, rabbit2Button, sheep2Button, owl2Button, bear2Button)
+        val imageButtons = listOf<ImageButton>(
+            birdButton,
+            horseButton,
+            rabbitButton,
+            sheepButton,
+            owlButton,
+            bearButton
+        )
+        val imageViews = listOf<View>(
+            bird2Button,
+            horse2Button,
+            rabbit2Button,
+            sheep2Button,
+            owl2Button,
+            bear2Button
+        )
         var selectedImageView: View? = null
 
         for (i in imageButtons.indices) {
@@ -93,7 +105,8 @@ class SettingsProfile2 : AppCompatActivity() {
                 val key = newDatabaseReference.key
 
                 // Создание объекта пользователя и добавление информации в базу данных Firebase
-                val user = User(key.toString(), userName, selectedAvatar!!, "player")
+                val user = User(key.toString(), userName, selectedAvatar!!, "player", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0
+                )
                 if (key != null) {
                     database.child("users").child(key).setValue(user)
                 }
@@ -106,7 +119,12 @@ class SettingsProfile2 : AppCompatActivity() {
         }
 
 
-
     }
-    data class User(val key: String, val name: String, val avatar: String, val status: String)
+
+    data class User(val key: String, val name: String, val avatar: String, val status: String, val a11: String,
+        val a12: String, val a13: String, val a14: String, val a15: String, val a21: String,
+        val a22: String, val a23: String, val a24: String, val a25: String, val a31: String,
+        val a32: String, val a33: String, val a34: String, val a35: String, val a41: String,
+        val a42: String, val a43: String, val a44: String, val a45: String, val a51: String,
+        val a52: String, val a53: String, val a54: String, val a55: String, val scores: Int)
 }

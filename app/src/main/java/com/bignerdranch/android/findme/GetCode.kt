@@ -1,6 +1,5 @@
 package com.bignerdranch.android.findme
-
-import Wait
+// Активити, в котором админом выбирается режим и создается игра.
 import android.content.Intent
 import android.os.Bundle
 import android.view.View

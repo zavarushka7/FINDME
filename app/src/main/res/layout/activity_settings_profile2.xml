@@ -6,7 +6,7 @@
     android:background="@drawable/phoneyellow"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".SettingsProfile">
+    tools:context=".SettingsProfile2">
 
     <ImageButton
         android:id="@+id/bear_button"

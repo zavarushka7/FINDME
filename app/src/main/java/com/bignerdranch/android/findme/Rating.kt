@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+// Рейтинговая таблица с баллами игроков
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

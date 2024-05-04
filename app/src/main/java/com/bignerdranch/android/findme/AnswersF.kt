@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+// Ответы на вопросы
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

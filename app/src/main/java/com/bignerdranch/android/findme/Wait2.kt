@@ -1,5 +1,6 @@
 package com.bignerdranch.android.findme
-
+//Активити для игроков, в котором видно сколько игроков подключились
+// + ожидание админа, пока он не нажмет на кнопку "Начать игру" в Wait
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 

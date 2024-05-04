@@ -1,11 +1,10 @@
 package com.bignerdranch.android.findme
-
+//Активити настроек с двумя кнопками "Звук", "Режимы игры", "Предыстория".
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 
 class Settings : AppCompatActivity() {

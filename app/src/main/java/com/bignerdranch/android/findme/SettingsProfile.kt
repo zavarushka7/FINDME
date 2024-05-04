@@ -1,18 +1,15 @@
 package com.bignerdranch.android.findme
-
-import Wait
+//Активити, в котором админ выбирает имя и аватарку.
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 
 class SettingsProfile : AppCompatActivity() {
@@ -94,7 +91,9 @@ class SettingsProfile : AppCompatActivity() {
                 val key = newDatabaseReference.key
 
                 // Создание объекта пользователя и добавление информации в базу данных Firebase
-                val user = User(key.toString(), userName, selectedAvatar!!, "admin")
+                val user = User(key.toString(), userName, selectedAvatar!!, "admin","","","","",""
+                    ,"","","","","","","","","","","","","","",""
+                    ,"","","","","", 0)
                 if (key != null) {
                     database.child("users").child(key).setValue(user)
                 }
@@ -109,5 +108,10 @@ class SettingsProfile : AppCompatActivity() {
         }
 
     }
-    data class User(val key: String, val name: String, val avatar: String, val status: String)
+    data class User(val key: String, val name: String, val avatar: String, val status: String, val a11: String,
+                    val a12: String, val a13: String, val a14: String, val a15: String, val a21: String,
+                    val a22: String, val a23: String, val a24: String, val a25: String, val a31: String,
+                    val a32: String, val a33: String, val a34: String, val a35: String, val a41: String,
+                    val a42: String, val a43: String, val a44: String, val a45: String, val a51: String,
+                    val a52: String, val a53: String, val a54: String, val a55: String, val scores: Int)
 }

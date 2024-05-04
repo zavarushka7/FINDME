@@ -6,7 +6,7 @@
     android:background="@drawable/phoneyellow"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Start">
+    tools:context=".GetCode">
 
     <TextView
         android:id="@+id/code"
