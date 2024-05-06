@@ -57,12 +57,10 @@ class Wait : AppCompatActivity() {
                         playerAvatar.takeLast(11) == "ep2_button}" -> playerAvatar1 = imageIDlist[5]
                         else -> Toast.makeText(this@Wait, ID, Toast.LENGTH_SHORT).show()
                     }
-
                     val player = Player(playerAvatar1, playerName)
                     adapter.addPlayer(player)
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
 
             }
