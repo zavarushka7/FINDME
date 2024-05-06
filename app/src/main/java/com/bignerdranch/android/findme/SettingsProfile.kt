@@ -73,6 +73,7 @@ class SettingsProfile : AppCompatActivity() {
                     imageView.visibility = View.VISIBLE
                     selectedImageView = imageView
                     selectedAvatar = imageView.toString()
+
                 }
             }
         }
@@ -100,9 +101,8 @@ class SettingsProfile : AppCompatActivity() {
 
                 // Запуск активити GetCode с передачей уникального ключа в Intent
                 val intent = Intent(this@SettingsProfile, GetCode::class.java)
-                val intent2 = Intent(this@SettingsProfile, Wait::class.java)
                 intent.putExtra("key", key)
-                intent2.putExtra("key2", key)
+
                 startActivity(intent)
             }
         }
@@ -114,4 +114,6 @@ class SettingsProfile : AppCompatActivity() {
                     val a32: String, val a33: String, val a34: String, val a35: String, val a41: String,
                     val a42: String, val a43: String, val a44: String, val a45: String, val a51: String,
                     val a52: String, val a53: String, val a54: String, val a55: String, val scores: Int)
+
+
 }

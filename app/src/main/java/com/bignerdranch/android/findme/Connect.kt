@@ -44,7 +44,7 @@ class Connect : AppCompatActivity() {
                     if (codeMatched) {
                         gameKey?.let { key ->
 
-                            val key_player = intent.getStringExtra("name")
+                            val key_player = intent.getStringExtra("key")
                             val playersRef = database.child(key).child("players")
                             val playerCount = dataSnapshot.child(key).child("count").getValue(Int::class.java) ?: 0
                             val playerData = hashMapOf<String, Any>()

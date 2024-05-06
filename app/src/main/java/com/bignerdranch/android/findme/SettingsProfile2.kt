@@ -113,7 +113,7 @@ class SettingsProfile2 : AppCompatActivity() {
 
                 // Запуск активити GetCode с передачей уникального ключа в Intent
                 val intent = Intent(this@SettingsProfile2, Connect::class.java)
-                intent.putExtra("name", key)
+                intent.putExtra("key", key)
                 startActivity(intent)
             }
         }
