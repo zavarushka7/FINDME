@@ -36,7 +36,6 @@ class Wait : AppCompatActivity() {
         val recyclerView: RecyclerView = binding.recyclerview
         recyclerView.layoutManager = GridLayoutManager(this@Wait, 1)
         recyclerView.adapter = adapter
-
         var playerAvatar: String = ""
         var playerName: String = ""
         val ID = intent.getStringExtra("code").toString()
