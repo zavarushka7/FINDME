@@ -64,7 +64,7 @@ class Wait : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Обработка ошибки при чтении из базы данных
+
             }
         })
     }

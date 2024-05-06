@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+
+
 class Connect : AppCompatActivity() {
     private lateinit var code: EditText
     private lateinit var connectButton: ImageButton
