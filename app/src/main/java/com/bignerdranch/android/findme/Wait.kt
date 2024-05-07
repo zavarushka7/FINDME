@@ -31,7 +31,6 @@ class Wait : AppCompatActivity() {
         setContentView(binding.root)
         init()
     }
-
     private fun init() {
         val recyclerView: RecyclerView = binding.recyclerview
         recyclerView.layoutManager = GridLayoutManager(this@Wait, 1)
