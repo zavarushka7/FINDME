@@ -45,6 +45,7 @@ class Wait : AppCompatActivity() {
                 playerAvatar = dataSnapshot.child("avatar").getValue(String::class.java).toString()
                 playerName = dataSnapshot.child("name").getValue(String::class.java).toString()
 
+
                 if (playerAvatar != "") {
                     var playerAvatar1 = 0
                     when {
