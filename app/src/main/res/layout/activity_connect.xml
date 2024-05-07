@@ -9,6 +9,7 @@
     tools:context=".Connect">
 
 
+
     <EditText
         android:id="@+id/randomcode"
         android:layout_width="168dp"

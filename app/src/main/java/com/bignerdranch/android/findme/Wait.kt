@@ -1,6 +1,10 @@
 package com.bignerdranch.android.findme
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,9 +17,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Wait : AppCompatActivity() {
+    private lateinit var startButton23: ImageButton
     private lateinit var binding: ActivityWaitBinding
     private val adapter = PlayerAdapter()
     private lateinit var database: DatabaseReference
+    private lateinit var database2: DatabaseReference
     private val imageIDlist = listOf(
         R.drawable.bear,
         R.drawable.horse,
@@ -29,6 +35,7 @@ class Wait : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWaitBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        startButton23 = findViewById(R.id.start23)
         init()
     }
     private fun init() {
@@ -37,8 +44,11 @@ class Wait : AppCompatActivity() {
         recyclerView.adapter = adapter
         var playerAvatar: String = ""
         var playerName: String = ""
-        val ID = intent.getStringExtra("code").toString()
+        var playerCount : Int = 1
+        var playerCount2 : Int = 1
+        val ID = intent.getStringExtra("playerName").toString()
         database = FirebaseDatabase.getInstance().reference.child("users").child(ID)
+        database2 = FirebaseDatabase.getInstance().reference.child("game").child(ID)
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 playerAvatar = dataSnapshot.child("avatar").getValue(String::class.java).toString()
@@ -64,5 +74,29 @@ class Wait : AppCompatActivity() {
 
             }
         })
+
+        database2.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                playerCount = dataSnapshot.child("count").getValue(Int::class.java)!!
+                playerCount2 = playerCount
+                Toast.makeText(this@Wait, playerCount.toString(), Toast.LENGTH_SHORT).show()
+
+
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
+        val textView = findViewById<TextView>(R.id.textView)
+        startButton23.setOnClickListener {
+            startButton23.isEnabled = false
+
+            if (playerCount2 >= 4) {
+                startButton23.isEnabled = true
+                startButton23.setColorFilter(null)
+                textView.text = "Начать игру"
+                val intent = Intent(this@Wait, AnswersF::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

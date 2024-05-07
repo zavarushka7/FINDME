@@ -55,8 +55,6 @@ class GetCode : AppCompatActivity() {
         }
         startButton2.setOnClickListener {
             val admin = intent.getStringExtra("key")
-            val intent2 = Intent(this@GetCode, Wait::class.java)
-            intent2.putExtra("code", admin)
             if (selectedImageView == null) {
                 Toast.makeText(this, "Please select an avatar", Toast.LENGTH_SHORT).show()
             } else {
