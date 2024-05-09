@@ -47,8 +47,6 @@ class Connect : AppCompatActivity() {
                         gameKey?.let { key ->
 
                             val key_player = intent.getStringExtra("key")
-                            val intent2 = Intent(this@Connect, Wait2::class.java)
-                            intent2.putExtra("GameCode", key_player)
                             val playersRef = database.child(key).child("players")
                             val playerCount = dataSnapshot.child(key).child("count").getValue(Int::class.java) ?: 0
                             val playerData = hashMapOf<String, Any>()
@@ -60,6 +58,7 @@ class Connect : AppCompatActivity() {
 
                             val intent = Intent(this@Connect, Wait2::class.java)
                             intent.putExtra("playerName", key_player)
+                            intent.putExtra("GameCode", key)
                             startActivity(intent)
                         }
                     } else {
