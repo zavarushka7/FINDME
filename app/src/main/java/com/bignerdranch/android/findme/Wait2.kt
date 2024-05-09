@@ -15,7 +15,6 @@ class Wait2 : AppCompatActivity() {
     private lateinit var binding: ActivityWait2Binding
     private val adapter = PlayerAdapter()
     private lateinit var database: DatabaseReference
-    private lateinit var database2: DatabaseReference
     private val playerList = mutableMapOf<String, String>()
     private val imageIDlist = listOf(
         R.drawable.bear,
@@ -41,10 +40,7 @@ class Wait2 : AppCompatActivity() {
         var adminAvatar: String = ""
         var adminName: String = ""
         var playerName: String = ""
-        var playerCount: Int = 1
-        var playerCount2: Int = 1
         var k: Int = 2
-        val ID = intent.getStringExtra("playerName").toString() // код игрока
         val GameCode = intent.getStringExtra("GameCode").toString() // код игры = код админа
         database = FirebaseDatabase.getInstance().reference
         database.addValueEventListener(object : ValueEventListener {
@@ -52,16 +48,13 @@ class Wait2 : AppCompatActivity() {
                 adminName = dataSnapshot.child("users").child(GameCode).child("name").getValue(String::class.java).toString()
                 adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar").getValue(String::class.java).toString()
                 playerList[adminName] = adminAvatar
-                Log.d("TAGGG1", playerList["admin"].toString())
                 for (playerSnapshot in dataSnapshot.child("game").child(GameCode).child("players").children) {
                     val playerID = playerSnapshot.child("name").getValue(String::class.java)
-                    Toast.makeText(this@Wait2, playerID, Toast.LENGTH_SHORT).show()
                     playerAvatar = dataSnapshot.child("users").child(playerID.toString()).child("avatar").getValue(String::class.java).toString()
                     playerName = dataSnapshot.child("users").child(playerID.toString()).child("name").getValue(String::class.java).toString()
                     playerList.put(playerName, playerAvatar)
                     k++
                 }
-                Log.d("TAGGG", playerList.toString())
                 for ((Name, Avatar) in playerList) {
                     if (Avatar != "") {
                         var playerAvatar1 = 0
@@ -72,7 +65,6 @@ class Wait2 : AppCompatActivity() {
                             Avatar.takeLast(11) == "wl2_button}" -> playerAvatar1 = imageIDlist[3]
                             Avatar.takeLast(11) == "rd2_button}" -> playerAvatar1 = imageIDlist[4]
                             Avatar.takeLast(11) == "ep2_button}" -> playerAvatar1 = imageIDlist[5]
-                            // else -> Toast.makeText(this@Wait2, Name + Avatar, Toast.LENGTH_SHORT).show()
                         }
                         val player = Player(playerAvatar1, Name)
                         adapter.addPlayer(player)

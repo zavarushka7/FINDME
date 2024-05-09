@@ -57,7 +57,6 @@ class Connect : AppCompatActivity() {
                             countRef.setValue(playerCount + 1)
 
                             val intent = Intent(this@Connect, Wait2::class.java)
-                            intent.putExtra("playerName", key_player)
                             intent.putExtra("GameCode", key)
                             startActivity(intent)
                         }
