@@ -105,8 +105,7 @@ class SettingsProfile2 : AppCompatActivity() {
                 val key = newDatabaseReference.key
 
                 // Создание объекта пользователя и добавление информации в базу данных Firebase
-                val user = User(key.toString(), userName, selectedAvatar!!, "player", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0
-                )
+                val user = User(key.toString(), userName, selectedAvatar!!, "player", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0)
                 if (key != null) {
                     database.child("users").child(key).setValue(user)
                 }
@@ -124,7 +123,5 @@ class SettingsProfile2 : AppCompatActivity() {
     data class User(val key: String, val name: String, val avatar: String, val status: String, val a11: String,
         val a12: String, val a13: String, val a14: String, val a15: String, val a21: String,
         val a22: String, val a23: String, val a24: String, val a25: String, val a31: String,
-        val a32: String, val a33: String, val a34: String, val a35: String, val a41: String,
-        val a42: String, val a43: String, val a44: String, val a45: String, val a51: String,
-        val a52: String, val a53: String, val a54: String, val a55: String, val scores: Int)
+        val a32: String, val a33: String, val a34: String, val a35: String, val scores: Int)
 }

@@ -120,11 +120,12 @@ class Wait : AppCompatActivity() {
         startButton23.setOnClickListener {
             startButton23.isEnabled = false
 
-            if (playerCount2 >= 4) {
+            if (playerCount2 >= 1) {
                 startButton23.isEnabled = true
                 startButton23.setColorFilter(null)
                 textView.text = "Начать игру"
                 val intent = Intent(this@Wait, AnswersF::class.java)
+                intent.putExtra("gamecode", ID)
                 startActivity(intent)
             }
         }
