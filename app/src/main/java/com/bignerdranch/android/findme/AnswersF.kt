@@ -49,7 +49,7 @@ class AnswersF : AppCompatActivity() {
     var a33 = ""
     var a34 = ""
     var a35 = ""
-    var k = -1
+    var k = 0
     private var currentQuestion = ""
     private var currentAnswer = ""
 
@@ -63,17 +63,17 @@ class AnswersF : AppCompatActivity() {
         answer = findViewById(R.id.answers)
         nextButton = findViewById(R.id.next_question)
 
-        showNextQuestion()
+        showNextQuestion4()
         nextButton.setOnClickListener {
             val answer = answer.text.toString()
             currentAnswer = answer
-            showNextQuestion()
+            showNextQuestion4()
         }
 
 
     }
-    private fun showNextQuestion() {
-        if (questions.isEmpty()) {
+    private fun showNextQuestion4() {
+        if (k==10) {
             // Все вопросы заданы
             // Можно выполнить какие-то дополнительные действия или перейти на другой экран
         } else {
@@ -83,67 +83,40 @@ class AnswersF : AppCompatActivity() {
             question.text = currentQuestion
             val a = answer.text.toString()
             when (k) {
-                0 -> {
+                1 -> {
                     a11 = a
                     database.child("a11").setValue(a11)
                 }
 
-                1 -> {
+                2 -> {
                     a12 = a
                     database.child("a12").setValue(a12)
                 }
-                2 -> {
+                3 -> {
                     a13 = a
                     database.child("a13").setValue(a13)
                 }
-                3 -> {
-                    a14 = a
-                    database.child("a14").setValue(a14)
-                }
                 4 -> {
-                    a15 = a
-                    database.child("a15").setValue(a15)
-                }
-                5 -> {
                     a21 = a
                     database.child("a21").setValue(a21)
                 }
-                6 -> {
+                5 -> {
                     a22 = a
                     database.child("a22").setValue(a22)
                 }
-                7 -> {
+                6 -> {
                     a23 = a
                     database.child("a23").setValue(a23)
                 }
-                8 -> {
-                    a24 = a
-                    database.child("a24").setValue(a24)
-                }
-                9 -> {
-                    a25 = a
-                    database.child("a25").setValue(a25)
-                }
-                10 -> {
+                7 -> {
                     a31 = a
                     database.child("a31").setValue(a31)
                 }
-                11 -> {
+                8 -> {
                     a32 = a
                     database.child("a32").setValue(a32)
                 }
-                12 -> {
-                    a33 = a
-                    database.child("a33").setValue(a33)
-                }
-                13 -> {
-                    a34 = a
-                    database.child("a34").setValue(a34)
-                }
-                14 -> {
-                    a35 = a
-                    database.child("a35").setValue(a35)
-                }
+
             }
             k ++
             answer.text.clear()
