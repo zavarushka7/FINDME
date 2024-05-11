@@ -1,12 +1,12 @@
 package com.bignerdranch.android.findme
 // Ответы на вопросы
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.database
@@ -58,16 +58,25 @@ class AnswersF : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answers)
         val ID = intent.getStringExtra("gamecode").toString()
+        val count = intent.getStringExtra("count").toString()
         database = Firebase.database.reference.child("users").child(ID)
 
         answer = findViewById(R.id.answers)
         nextButton = findViewById(R.id.next_question)
-
-        showNextQuestion4()
+        Toast.makeText(this@AnswersF, count, Toast.LENGTH_SHORT).show()
+        if (count == "4"){showNextQuestion4()}
+        else if (count == "5"){showNextQuestion5()}
+        else if (count == "6"){showNextQuestion6()}
+        else if (count == "7"){showNextQuestion7()}
+        else if (count == "8"){showNextQuestion8()}
         nextButton.setOnClickListener {
             val answer = answer.text.toString()
             currentAnswer = answer
-            showNextQuestion4()
+            if (count == "4"){showNextQuestion4()}
+            else if (count == "5"){showNextQuestion5()}
+            else if (count == "6"){showNextQuestion6()}
+            else if (count == "7"){showNextQuestion7()}
+            else if (count == "8"){showNextQuestion8()}
         }
 
 
@@ -116,7 +125,257 @@ class AnswersF : AppCompatActivity() {
                     a32 = a
                     database.child("a32").setValue(a32)
                 }
-
+            }
+            k ++
+            answer.text.clear()
+            answer.hint = currentQuestion
+            questions.remove(currentQuestion)
+        }
+    }
+    private fun showNextQuestion5() {
+        if (k==12) {
+            // Все вопросы заданы
+            // Можно выполнить какие-то дополнительные действия или перейти на другой экран
+        } else {
+            val randomIndex = (0 until questions.size).random()
+            currentQuestion = questions[randomIndex]
+            var question = findViewById<TextView>(R.id.questions)
+            question.text = currentQuestion
+            val a = answer.text.toString()
+            when (k) {
+                1 -> {
+                    a11 = a
+                    database.child("a11").setValue(a11)
+                }
+                2 -> {
+                    a12 = a
+                    database.child("a12").setValue(a12)
+                }
+                3 -> {
+                    a13 = a
+                    database.child("a13").setValue(a13)
+                }
+                4 -> {
+                    a21 = a
+                    database.child("a21").setValue(a21)
+                }
+                5 -> {
+                    a22 = a
+                    database.child("a22").setValue(a22)
+                }
+                6 -> {
+                    a23 = a
+                    database.child("a23").setValue(a23)
+                }
+                7 -> {
+                    a31 = a
+                    database.child("a31").setValue(a31)
+                }
+                8 -> {
+                    a32 = a
+                    database.child("a32").setValue(a32)
+                }
+                9 -> {
+                    a33 = a
+                    database.child("a33").setValue(a33)
+                }
+                10 -> {
+                    a34 = a
+                    database.child("a34").setValue(a34)
+                }
+            }
+            k ++
+            answer.text.clear()
+            answer.hint = currentQuestion
+            questions.remove(currentQuestion)
+        }
+    }
+    private fun showNextQuestion6() {
+        if (k==11) {
+            // Все вопросы заданы
+            // Можно выполнить какие-то дополнительные действия или перейти на другой экран
+        } else {
+            val randomIndex = (0 until questions.size).random()
+            currentQuestion = questions[randomIndex]
+            var question = findViewById<TextView>(R.id.questions)
+            question.text = currentQuestion
+            val a = answer.text.toString()
+            when (k) {
+                1 -> {a11 = a
+                    database.child("a11").setValue(a11)
+                }
+                2 -> {
+                    a12 = a
+                    database.child("a12").setValue(a12)
+                }
+                3 -> {
+                    a13 = a
+                    database.child("a13").setValue(a13)
+                }
+                4 -> {
+                    a21 = a
+                    database.child("a21").setValue(a21)
+                }
+                5 -> {
+                    a22 = a
+                    database.child("a22").setValue(a22)
+                }
+                6 -> {
+                    a23 = a
+                    database.child("a23").setValue(a23)
+                }
+                7 -> {
+                    a31 = a
+                    database.child("a31").setValue(a31)
+                }
+                8 -> {
+                    a32 = a
+                    database.child("a32").setValue(a32)
+                }
+                9 -> {
+                    a33 = a
+                    database.child("a33").setValue(a33)
+                }
+            }
+            k ++
+            answer.text.clear()
+            answer.hint = currentQuestion
+            questions.remove(currentQuestion)
+        }
+    }
+    private fun showNextQuestion7() {
+        if (k==16) {
+            // Все вопросы заданы
+            // Можно выполнить какие-то дополнительные действия или перейти на другой экран
+        } else {
+            val randomIndex = (0 until questions.size).random()
+            currentQuestion = questions[randomIndex]
+            var question = findViewById<TextView>(R.id.questions)
+            question.text = currentQuestion
+            val a = answer.text.toString()
+            when (k) {
+                1 -> {
+                    a11 = a
+                    database.child("a11").setValue(a11)
+                }
+                2 -> {
+                    a12 = a
+                    database.child("a12").setValue(a12)
+                }
+                3 -> {
+                    a13 = a
+                    database.child("a13").setValue(a13)
+                }
+                4 -> {
+                    a14 = a
+                    database.child("a14").setValue(a14)
+                }
+                5 -> {
+                    a21 = a
+                    database.child("a21").setValue(a21)
+                }
+                6 -> {
+                    a22 = a
+                    database.child("a22").setValue(a22)
+                }
+                7 -> {
+                    a23 = a
+                    database.child("a23").setValue(a23)
+                }
+                8 -> {
+                    a24 = a
+                    database.child("a24").setValue(a24)
+                }
+                9 -> {
+                    a25 = a
+                    database.child("a25").setValue(a25)
+                }
+                10 -> {
+                    a31 = a
+                    database.child("a31").setValue(a31)
+                }
+                11 -> {
+                    a32 = a
+                    database.child("a32").setValue(a32)
+                }
+                12 -> {
+                    a33 = a
+                    database.child("a33").setValue(a33)
+                }
+                13 -> {
+                    a34 = a
+                    database.child("a34").setValue(a34)
+                }
+                14 -> {
+                    a35 = a
+                    database.child("a35").setValue(a35)
+                }
+            }
+            k ++
+            answer.text.clear()
+            answer.hint = currentQuestion
+            questions.remove(currentQuestion)
+        }
+    }
+    private fun showNextQuestion8() {
+        if (k==14) {
+            // Все вопросы заданы
+            // Можно выполнить какие-то дополнительные действия или перейти на другой экран
+        } else {
+            val randomIndex = (0 until questions.size).random()
+            currentQuestion = questions[randomIndex]
+            var question = findViewById<TextView>(R.id.questions)
+            question.text = currentQuestion
+            val a = answer.text.toString()
+            when (k) {
+                1 -> {
+                    a11 = a
+                    database.child("a11").setValue(a11)
+                }
+                2 -> {
+                    a12 = a
+                    database.child("a12").setValue(a12)
+                }
+                3 -> {
+                    a13 = a
+                    database.child("a13").setValue(a13)
+                }
+                4 -> {
+                    a14 = a
+                    database.child("a14").setValue(a14)
+                }
+                5 -> {
+                    a21 = a
+                    database.child("a21").setValue(a21)
+                }
+                6 -> {
+                    a22 = a
+                    database.child("a22").setValue(a22)
+                }
+                7 -> {
+                    a23 = a
+                    database.child("a23").setValue(a23)
+                }
+                8 -> {
+                    a24 = a
+                    database.child("a24").setValue(a24)
+                }
+                9 -> {
+                    a31 = a
+                    database.child("a31").setValue(a31)
+                }
+                10 -> {
+                    a32 = a
+                    database.child("a32").setValue(a32)
+                }
+                11 -> {
+                    a33 = a
+                    database.child("a33").setValue(a33)
+                }
+                12 -> {
+                    a34 = a
+                    database.child("a34").setValue(a34)
+                }
             }
             k ++
             answer.text.clear()

@@ -126,6 +126,7 @@ class Wait : AppCompatActivity() {
                 textView.text = "Начать игру"
                 val intent = Intent(this@Wait, AnswersF::class.java)
                 intent.putExtra("gamecode", ID)
+                intent.putExtra("count", playerCount2.toString())
                 startActivity(intent)
             }
         }
