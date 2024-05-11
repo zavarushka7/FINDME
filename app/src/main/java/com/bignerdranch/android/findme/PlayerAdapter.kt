@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.findme.databinding.PlayerItemBinding
 
 class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
+
     val playerList = ArrayList<Player>()
+
     class PlayerHolder(item: View): RecyclerView.ViewHolder(item) {
         val binding = PlayerItemBinding.bind(item)
         fun bind(player: Player) = with(binding){
@@ -28,9 +30,17 @@ class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
     override fun onBindViewHolder(holder: PlayerHolder, position: Int) {
         holder.bind(playerList[position])
     }
+
     fun addPlayer(player: Player){
         playerList.add(player)
         notifyDataSetChanged()
     }
+
+    fun clearPlayers(adapter: PlayerAdapter) {
+        adapter.playerList.clear()
+        adapter.notifyDataSetChanged()
+    }
+
 }
+
 

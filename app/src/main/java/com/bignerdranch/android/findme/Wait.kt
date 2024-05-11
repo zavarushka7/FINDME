@@ -50,14 +50,12 @@ class Wait : AppCompatActivity() {
         var playerCount2 : Int = 1
         var k: Int = 2
         val ID = intent.getStringExtra("playerName").toString() // код админа = код игры
-        database = FirebaseDatabase.getInstance().reference.child("users").child(ID)
-        database2 = FirebaseDatabase.getInstance().reference.child("game").child(ID)
-        database3 = FirebaseDatabase.getInstance().reference
+        database = FirebaseDatabase.getInstance().reference
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                playerAvatar = dataSnapshot.child("avatar").getValue(String::class.java).toString()
-                playerName = dataSnapshot.child("name").getValue(String::class.java).toString()
-
+                adapter.clearPlayers(adapter)
+                playerAvatar = dataSnapshot.child("users").child(ID).child("avatar").getValue(String::class.java).toString()
+                playerName = dataSnapshot.child("users").child(ID).child("name").getValue(String::class.java).toString()
 
                 if (playerAvatar != "") {
                     var playerAvatar1 = 0
@@ -73,22 +71,10 @@ class Wait : AppCompatActivity() {
                     val player = Player(playerAvatar1, playerName)
                     adapter.addPlayer(player)
                 }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
 
-            }
-        })
-
-        database2.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                playerCount = dataSnapshot.child("count").getValue(Int::class.java)!!
+                playerCount = dataSnapshot.child("game").child(ID).child("count").getValue(Int::class.java)!!
                 playerCount2 = playerCount
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
-        })
-        database3.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 for (playerSnapshot in dataSnapshot.child("game").child(ID).child("players").children) {
                     val playerID = playerSnapshot.child("name").getValue(String::class.java)
                     playerAvatar = dataSnapshot.child("users").child(playerID.toString()).child("avatar").getValue(String::class.java).toString()
@@ -96,6 +82,7 @@ class Wait : AppCompatActivity() {
                     playerList.put(playerName, playerAvatar)
                     k++
                 }
+
                 for ((Name, Avatar) in playerList) {
                     if (Avatar != "") {
                         var playerAvatar1 = 0
@@ -114,13 +101,15 @@ class Wait : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+
             }
         })
+
         val textView = findViewById<TextView>(R.id.textView)
         startButton23.setOnClickListener {
             startButton23.isEnabled = false
 
-            if (playerCount2 >= 1) {
+            if (playerCount2 >= 4) {
                 startButton23.isEnabled = true
                 startButton23.setColorFilter(null)
                 textView.text = "Начать игру"

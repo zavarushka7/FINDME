@@ -45,6 +45,7 @@ class Wait2 : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                adapter.clearPlayers(adapter)
                 adminName = dataSnapshot.child("users").child(GameCode).child("name").getValue(String::class.java).toString()
                 adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar").getValue(String::class.java).toString()
                 playerList[adminName] = adminAvatar
