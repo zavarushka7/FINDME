@@ -58,6 +58,7 @@ class Connect : AppCompatActivity() {
 
                             val intent = Intent(this@Connect, Wait2::class.java)
                             intent.putExtra("GameCode", key)
+                            intent.putExtra("key_pl", key_player)
                             startActivity(intent)
                         }
                     } else {

@@ -1,7 +1,7 @@
 package com.bignerdranch.android.findme
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +16,7 @@ class Wait2 : AppCompatActivity() {
     private val adapter = PlayerAdapter()
     private lateinit var database: DatabaseReference
     private val playerList = mutableMapOf<String, String>()
+    private lateinit var startButton234: ImageButton
     private val imageIDlist = listOf(
         R.drawable.bear,
         R.drawable.horse,
@@ -40,14 +41,19 @@ class Wait2 : AppCompatActivity() {
         var adminAvatar: String = ""
         var adminName: String = ""
         var playerName: String = ""
+        var count2 = 0
         var k: Int = 2
-        val GameCode = intent.getStringExtra("GameCode").toString() // код игры = код админа
+        startButton234 = findViewById(R.id.imageButton)
+        val GameCode = intent.getStringExtra("GameCode").toString()// код игры = код админа
+        val key_pl = intent.getStringExtra("key_pl").toString()
         database = FirebaseDatabase.getInstance().reference
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 adapter.clearPlayers(adapter)
                 adminName = dataSnapshot.child("users").child(GameCode).child("name").getValue(String::class.java).toString()
                 adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar").getValue(String::class.java).toString()
+                var count = dataSnapshot.child("game").child(GameCode).child("count").getValue(Int::class.java)!!
+                count2 = count
                 playerList[adminName] = adminAvatar
                 for (playerSnapshot in dataSnapshot.child("game").child(GameCode).child("players").children) {
                     val playerID = playerSnapshot.child("name").getValue(String::class.java)
@@ -76,5 +82,11 @@ class Wait2 : AppCompatActivity() {
                 // Handle onCancelled event
             }
         })
+        startButton234.setOnClickListener {
+                val intent = Intent(this@Wait2, AnswersF::class.java)
+                intent.putExtra("gamecode", key_pl)
+                intent.putExtra("count", count2.toString())
+                startActivity(intent)
+        }
     }
 }

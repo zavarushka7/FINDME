@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-// Ответы на вопросы
+// Ответы на вопросы для админа
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
