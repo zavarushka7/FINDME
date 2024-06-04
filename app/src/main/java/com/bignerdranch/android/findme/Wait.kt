@@ -15,14 +15,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+// админ
 class Wait : AppCompatActivity() {
     private lateinit var startButton23: ImageButton
     private lateinit var binding: ActivityWaitBinding
     private val adapter = PlayerAdapter()
     private lateinit var database: DatabaseReference
-    private lateinit var database2: DatabaseReference
-    private lateinit var database3: DatabaseReference
     private val playerList = mutableMapOf<String, String>()
     private val imageIDlist = listOf(
         R.drawable.bear,
@@ -113,7 +111,7 @@ class Wait : AppCompatActivity() {
                 startButton23.isEnabled = true
                 startButton23.setColorFilter(null)
                 textView.text = "Начать игру"
-                val intent = Intent(this@Wait, AnswersF::class.java)
+                val intent = Intent(this@Wait, AnswersAdmin::class.java)
                 intent.putExtra("gamecode", ID)
                 intent.putExtra("count", playerCount2.toString())
                 startActivity(intent)

@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+// игрок
 class Wait2 : AppCompatActivity() {
     private lateinit var binding: ActivityWait2Binding
     private val adapter = PlayerAdapter()
@@ -83,10 +84,11 @@ class Wait2 : AppCompatActivity() {
             }
         })
         startButton234.setOnClickListener {
-                val intent = Intent(this@Wait2, AnswersF::class.java)
-                intent.putExtra("gamecode", key_pl)
-                intent.putExtra("count", count2.toString())
-                startActivity(intent)
+            val intent = Intent(this@Wait2, AnswersF::class.java)
+            intent.putExtra("gamecode", key_pl)
+            intent.putExtra("game", GameCode)
+            intent.putExtra("count", count2.toString())
+            startActivity(intent)
         }
     }
 }

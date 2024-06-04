@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-// Ответы на вопросы для игрока
+// Ответы на вопросы для админа
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
 
-class AnswersF : AppCompatActivity() {
+class AnswersAdmin : AppCompatActivity() {
     private val questions = listOf(
         "Вопрос 1",
         "Вопрос 2",
@@ -39,11 +39,12 @@ class AnswersF : AppCompatActivity() {
     private lateinit var answer: EditText
     private lateinit var nextButton: ImageButton
     private lateinit var database: DatabaseReference
-    private lateinit var database3: DatabaseReference
+    private lateinit var database2: DatabaseReference
     var a11 = ""
     var a12 = ""
     var a13 = ""
     var a14 = ""
+    var a15 = ""
     var a21 = ""
     var a22 = ""
     var a23 = ""
@@ -60,28 +61,33 @@ class AnswersF : AppCompatActivity() {
     private var currentAnswer = ""
     private lateinit var mode: String
 
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_answers)
-        val ID = intent.getStringExtra("gamecode").toString() // код игрока
-        val game = intent.getStringExtra("game").toString() // код игры для игрока (=код админа)
+        setContentView(R.layout.activity_answers_admin)
+        val ID = intent.getStringExtra("gamecode").toString() // код игры для админа
+
         val count = intent.getStringExtra("count").toString()
         database = Firebase.database.reference.child("users").child(ID)
+
         answer = findViewById(R.id.answers)
         nextButton = findViewById(R.id.next_question)
-        database3 = FirebaseDatabase.getInstance().reference.child("game").child(game) // путь для игрока
-        database3.addListenerForSingleValueEvent(object : ValueEventListener {
+        database2 = FirebaseDatabase.getInstance().reference.child("game").child(ID) // путь для админа
+        database2.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var mode1 = dataSnapshot.child("mode").getValue(String::class.java).toString()
+                val mode1 = dataSnapshot.child("mode").getValue(String::class.java).toString()
                 mode = mode1
-                var r1 = dataSnapshot.child("ready").getValue(Int::class.java)
+                val r1 = dataSnapshot.child("ready").getValue(Int::class.java)
                 r = r1!!
+                Toast.makeText(this@AnswersAdmin, mode, Toast.LENGTH_SHORT).show()
             }
+
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Failed to read value.", Toast.LENGTH_SHORT).show()
+                TODO("Not yet implemented")
             }
         })
+
 
         if (count == "4"){showNextQuestion4()}
         else if (count == "5"){showNextQuestion5()}
@@ -102,17 +108,21 @@ class AnswersF : AppCompatActivity() {
 
 
     }
+
     private fun showNextQuestion4() {
-        if (k == 10) {
-            r++
-            database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
+        if (k==10) {
+            r ++
+            database2.child("ready").setValue(r)
+            if (mode == "friends2"){
+                val intent = Intent(this@AnswersAdmin, VotingF::class.java)
                 startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
+            }
+            else if (mode == "strangers2"){
+                val intent = Intent(this@AnswersAdmin, VotingS::class.java)
                 startActivity(intent)
-           }
+            }
+
+
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
@@ -162,13 +172,14 @@ class AnswersF : AppCompatActivity() {
     }
     private fun showNextQuestion5() {
         if (k==12) {
-            r++
-            database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
+            r ++
+            database2.child("ready").setValue(r)
+            if (mode == "friends2"){
+                val intent = Intent(this@AnswersAdmin, VotingF::class.java)
                 startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
+            }
+            else if (mode == "strangers2"){
+                val intent = Intent(this@AnswersAdmin, VotingS::class.java)
                 startActivity(intent)
             }
         } else {
@@ -227,13 +238,14 @@ class AnswersF : AppCompatActivity() {
     }
     private fun showNextQuestion6() {
         if (k==11) {
-            r++
-            database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
+            r ++
+            database2.child("ready").setValue(r)
+            if (mode == "friends2"){
+                val intent = Intent(this@AnswersAdmin, VotingF::class.java)
                 startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
+            }
+            else if (mode == "strangers2"){
+                val intent = Intent(this@AnswersAdmin, VotingS::class.java)
                 startActivity(intent)
             }
         } else {
@@ -287,13 +299,14 @@ class AnswersF : AppCompatActivity() {
     }
     private fun showNextQuestion7() {
         if (k==16) {
-            r++
-            database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
+            r ++
+            database2.child("ready").setValue(r)
+            if (mode == "friends2"){
+                val intent = Intent(this@AnswersAdmin, VotingF::class.java)
                 startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
+            }
+            else if (mode == "strangers2"){
+                val intent = Intent(this@AnswersAdmin, VotingS::class.java)
                 startActivity(intent)
             }
         } else {
@@ -368,13 +381,14 @@ class AnswersF : AppCompatActivity() {
     }
     private fun showNextQuestion8() {
         if (k==14) {
-            r++
-            database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
+            r ++
+            database2.child("ready").setValue(r)
+            if (mode == "friends2"){
+                val intent = Intent(this@AnswersAdmin, VotingF::class.java)
                 startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
+            }
+            else if (mode == "strangers2"){
+                val intent = Intent(this@AnswersAdmin, VotingS::class.java)
                 startActivity(intent)
             }
         } else {

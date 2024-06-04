@@ -58,7 +58,7 @@ class GetCode : AppCompatActivity() {
             if (selectedImageView == null) {
                 Toast.makeText(this, "Please select an avatar", Toast.LENGTH_SHORT).show()
             } else {
-                val gameInfo = GameInfo(admin.toString(), mode, randomNumber, 1)
+                val gameInfo = GameInfo(admin.toString(), mode, randomNumber, 1, 0)
                 gameReference = database.child("game").child(admin.toString())
                 val gameKey = gameReference?.key
                 if (gameKey != null) {
@@ -85,6 +85,6 @@ class GetCode : AppCompatActivity() {
         randomNumber = (1000..9999).random()
         randomNumberTextView.text = randomNumber.toString()
     }
-    data class GameInfo(val admin: String, val mode: String, val code: Int, val count: Int)
+    data class GameInfo(val admin: String, val mode: String, val code: Int, val count: Int, val ready: Int = 0)
 
 }
