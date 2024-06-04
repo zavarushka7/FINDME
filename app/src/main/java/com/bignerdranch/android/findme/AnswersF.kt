@@ -16,24 +16,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 class AnswersF : AppCompatActivity() {
-    private val questions = listOf(
-        "Вопрос 1",
-        "Вопрос 2",
-        "Вопрос 3",
-        "Вопрос 4",
-        "Вопрос 5",
-        "Вопрос 6",
-        "Вопрос 7",
-        "Вопрос 8",
-        "Вопрос 9",
-        "Вопрос 10",
-        "Вопрос 11",
-        "Вопрос 12",
-        "Вопрос 13",
-        "Вопрос 14",
-        "Вопрос 15"
-
-    ).toMutableList()
     private lateinit var answer: EditText
     private lateinit var nextButton: ImageButton
     private lateinit var database: DatabaseReference
@@ -57,6 +39,7 @@ class AnswersF : AppCompatActivity() {
     private var currentQuestion = ""
     private var currentAnswer = ""
     private lateinit var gameID: String
+    private val questions = mutableListOf<String>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,17 +57,25 @@ class AnswersF : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val r1 = dataSnapshot.child("ready").getValue(Int::class.java)
                 r = r1!!
+
+                for (childSnapshot in dataSnapshot.child("questions").children) {
+                    val question = childSnapshot.getValue(String::class.java)
+                    if (!question.isNullOrBlank()) {
+                        questions.add(question!!)
+                    }
+                }
+                if (count == "4"){showNextQuestion4()}
+                else if (count == "5"){showNextQuestion5()}
+                else if (count == "6"){showNextQuestion6()}
+                else if (count == "7"){showNextQuestion7()}
+                else if (count == "8"){showNextQuestion8()}
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(applicationContext, "Failed to read value.", Toast.LENGTH_SHORT).show()
             }
         })
 
-        if (count == "4"){showNextQuestion4()}
-        else if (count == "5"){showNextQuestion5()}
-        else if (count == "6"){showNextQuestion6()}
-        else if (count == "7"){showNextQuestion7()}
-        else if (count == "8"){showNextQuestion8()}
+
         nextButton.setOnClickListener {
             val answer = answer.text.toString()
             currentAnswer = answer
@@ -98,18 +89,17 @@ class AnswersF : AppCompatActivity() {
         }
     }
     private fun showNextQuestion4() {
-        if (k == 10) {
+        if (questions.isEmpty()) {
             r++
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
             startActivity(intent)
 
-
-
         } else {
-            val randomIndex = (0 until questions.size).random()
+            var randomIndex = 0
             currentQuestion = questions[randomIndex]
+            randomIndex += 1
             val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
@@ -155,15 +145,16 @@ class AnswersF : AppCompatActivity() {
         }
     }
     private fun showNextQuestion5() {
-        if (k==12) {
+        if (questions.isEmpty()) {
             r++
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
             startActivity(intent)
         } else {
-            val randomIndex = (0 until questions.size).random()
+            var randomIndex = 0
             currentQuestion = questions[randomIndex]
+            randomIndex += 1
             val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
@@ -216,15 +207,16 @@ class AnswersF : AppCompatActivity() {
         }
     }
     private fun showNextQuestion6() {
-        if (k==11) {
+        if (questions.isEmpty()) {
             r++
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
             startActivity(intent)
         } else {
-            val randomIndex = (0 until questions.size).random()
+            var randomIndex = 0
             currentQuestion = questions[randomIndex]
+            randomIndex += 1
             val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
@@ -272,15 +264,16 @@ class AnswersF : AppCompatActivity() {
         }
     }
     private fun showNextQuestion7() {
-        if (k==16) {
+        if (questions.isEmpty()) {
             r++
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
             startActivity(intent)
         } else {
-            val randomIndex = (0 until questions.size).random()
+            var randomIndex = 0
             currentQuestion = questions[randomIndex]
+            randomIndex += 1
             val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
@@ -349,15 +342,16 @@ class AnswersF : AppCompatActivity() {
         }
     }
     private fun showNextQuestion8() {
-        if (k==14) {
+        if (questions.isEmpty()) {
             r++
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
             startActivity(intent)
         } else {
-            val randomIndex = (0 until questions.size).random()
+            var randomIndex = 0
             currentQuestion = questions[randomIndex]
+            randomIndex += 1
             var question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()

@@ -1,5 +1,5 @@
 package com.bignerdranch.android.findme
-
+// Ожидание ответов всех игроков
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

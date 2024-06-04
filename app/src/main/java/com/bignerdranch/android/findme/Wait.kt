@@ -10,11 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.findme.databinding.ActivityWaitBinding
+import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
+
 // Ожидание для админа
 class Wait : AppCompatActivity() {
     private lateinit var startButton23: ImageButton
@@ -30,6 +33,24 @@ class Wait : AppCompatActivity() {
         R.drawable.bird,
         R.drawable.sheep
     )
+    private val questions = listOf(
+        "Вопрос 1",
+        "Вопрос 2",
+        "Вопрос 3",
+        "Вопрос 4",
+        "Вопрос 5",
+        "Вопрос 6",
+        "Вопрос 7",
+        "Вопрос 8",
+        "Вопрос 9",
+        "Вопрос 10",
+        "Вопрос 11",
+        "Вопрос 12",
+        "Вопрос 13",
+        "Вопрос 14",
+        "Вопрос 15"
+
+    ).toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +135,22 @@ class Wait : AppCompatActivity() {
                 val intent = Intent(this@Wait, AnswersAdmin::class.java)
                 intent.putExtra("gamecode", ID)
                 intent.putExtra("count", playerCount2.toString())
+
+                // Выбираем случайные _ вопросов
+                val randomQuestions = when (playerCount2) {
+                    4 -> questions.shuffled().take(8)
+                    5 -> questions.shuffled().take(10)
+                    6 -> questions.shuffled().take(9)
+                    7 -> questions.shuffled().take(14)
+                    8 -> questions.shuffled().take(12)
+                    else -> listOf() // По умолчанию пустой список, если playerCount2 не соответствует ни одному из условий
+                }
+
+                val database = Firebase.database.reference.child("game").child(ID).child("questions")
+                for (i in 0 until randomQuestions.size) {
+                    database.child("w${i + 1}").setValue(randomQuestions[i])
+                }
+
                 startActivity(intent)
             }
         }
