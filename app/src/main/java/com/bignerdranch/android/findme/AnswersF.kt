@@ -69,6 +69,7 @@ class AnswersF : AppCompatActivity() {
         else if (count == "6"){showNextQuestion6()}
         else if (count == "7"){showNextQuestion7()}
         else if (count == "8"){showNextQuestion8()}
+
         nextButton.setOnClickListener {
             val answer = answer.text.toString()
             currentAnswer = answer
