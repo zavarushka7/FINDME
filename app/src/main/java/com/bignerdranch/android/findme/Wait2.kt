@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-// игрок
+// Ожидание для игрока
 class Wait2 : AppCompatActivity() {
     private lateinit var binding: ActivityWait2Binding
     private val adapter = PlayerAdapter()

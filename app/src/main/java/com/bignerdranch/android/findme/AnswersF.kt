@@ -15,8 +15,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
-
-
 class AnswersF : AppCompatActivity() {
     private val questions = listOf(
         "Вопрос 1",
@@ -58,14 +56,15 @@ class AnswersF : AppCompatActivity() {
     private var r: Int = 0
     private var currentQuestion = ""
     private var currentAnswer = ""
-    private lateinit var mode: String
+    private lateinit var gameID: String
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answers)
         val ID = intent.getStringExtra("gamecode").toString() // код игрока
-        val game = intent.getStringExtra("game").toString() // код игры для игрока (=код админа)
+        var game = intent.getStringExtra("game").toString() // код игры для игрока (=код админа)
+        gameID = game
         val count = intent.getStringExtra("count").toString()
         database = Firebase.database.reference.child("users").child(ID)
         answer = findViewById(R.id.answers)
@@ -73,9 +72,7 @@ class AnswersF : AppCompatActivity() {
         database3 = FirebaseDatabase.getInstance().reference.child("game").child(game) // путь для игрока
         database3.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var mode1 = dataSnapshot.child("mode").getValue(String::class.java).toString()
-                mode = mode1
-                var r1 = dataSnapshot.child("ready").getValue(Int::class.java)
+                val r1 = dataSnapshot.child("ready").getValue(Int::class.java)
                 r = r1!!
             }
             override fun onCancelled(error: DatabaseError) {
@@ -99,24 +96,21 @@ class AnswersF : AppCompatActivity() {
                 "8" -> showNextQuestion8()
             }
         }
-
-
     }
     private fun showNextQuestion4() {
         if (k == 10) {
             r++
             database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
-                startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
-                startActivity(intent)
-           }
+            val intent = Intent(this@AnswersF, Ready::class.java)
+            intent.putExtra("IDD", gameID)
+            startActivity(intent)
+
+
+
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
-            var question = findViewById<TextView>(R.id.questions)
+            val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
             when (k) {
@@ -164,17 +158,13 @@ class AnswersF : AppCompatActivity() {
         if (k==12) {
             r++
             database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
-                startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@AnswersF, Ready::class.java)
+            intent.putExtra("IDD", gameID)
+            startActivity(intent)
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
-            var question = findViewById<TextView>(R.id.questions)
+            val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
             when (k) {
@@ -229,17 +219,13 @@ class AnswersF : AppCompatActivity() {
         if (k==11) {
             r++
             database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
-                startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@AnswersF, Ready::class.java)
+            intent.putExtra("IDD", gameID)
+            startActivity(intent)
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
-            var question = findViewById<TextView>(R.id.questions)
+            val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
             when (k) {
@@ -289,17 +275,13 @@ class AnswersF : AppCompatActivity() {
         if (k==16) {
             r++
             database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
-                startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@AnswersF, Ready::class.java)
+            intent.putExtra("IDD", gameID)
+            startActivity(intent)
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
-            var question = findViewById<TextView>(R.id.questions)
+            val question = findViewById<TextView>(R.id.questions)
             question.text = currentQuestion
             val a = answer.text.toString()
             when (k) {
@@ -370,13 +352,9 @@ class AnswersF : AppCompatActivity() {
         if (k==14) {
             r++
             database3.child("ready").setValue(r)
-            if (mode == "friends2") {
-                val intent = Intent(this@AnswersF, VotingF::class.java)
-                startActivity(intent)
-            } else if (mode == "strangers2") {
-                val intent = Intent(this@AnswersF, VotingS::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@AnswersF, Ready::class.java)
+            intent.putExtra("IDD", gameID)
+            startActivity(intent)
         } else {
             val randomIndex = (0 until questions.size).random()
             currentQuestion = questions[randomIndex]
