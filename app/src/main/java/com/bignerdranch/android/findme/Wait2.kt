@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.findme.databinding.ActivityWait2Binding
+import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
+
 // Ожидание для игрока
 class Wait2 : AppCompatActivity() {
     private lateinit var binding: ActivityWait2Binding
@@ -26,6 +29,7 @@ class Wait2 : AppCompatActivity() {
         R.drawable.bird,
         R.drawable.sheep
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,15 +55,23 @@ class Wait2 : AppCompatActivity() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 adapter.clearPlayers(adapter)
-                adminName = dataSnapshot.child("users").child(GameCode).child("name").getValue(String::class.java).toString()
-                adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar").getValue(String::class.java).toString()
-                var count = dataSnapshot.child("game").child(GameCode).child("count").getValue(Int::class.java)!!
+                adminName = dataSnapshot.child("users").child(GameCode).child("name")
+                    .getValue(String::class.java).toString()
+                adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar")
+                    .getValue(String::class.java).toString()
+                var count = dataSnapshot.child("game").child(GameCode).child("count")
+                    .getValue(Int::class.java)!!
                 count2 = count
                 playerList[adminName] = adminAvatar
-                for (playerSnapshot in dataSnapshot.child("game").child(GameCode).child("players").children) {
+                for (playerSnapshot in dataSnapshot.child("game").child(GameCode)
+                    .child("players").children) {
                     val playerID = playerSnapshot.child("name").getValue(String::class.java)
-                    playerAvatar = dataSnapshot.child("users").child(playerID.toString()).child("avatar").getValue(String::class.java).toString()
-                    playerName = dataSnapshot.child("users").child(playerID.toString()).child("name").getValue(String::class.java).toString()
+                    playerAvatar =
+                        dataSnapshot.child("users").child(playerID.toString()).child("avatar")
+                            .getValue(String::class.java).toString()
+                    playerName =
+                        dataSnapshot.child("users").child(playerID.toString()).child("name")
+                            .getValue(String::class.java).toString()
                     playerList.put(playerName, playerAvatar)
                     k++
                 }
@@ -79,16 +91,25 @@ class Wait2 : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle onCancelled event
             }
         })
         startButton234.setOnClickListener {
-            val intent = Intent(this@Wait2, AnswersF::class.java)
-            intent.putExtra("gamecode", key_pl)
-            intent.putExtra("game", GameCode)
-            intent.putExtra("count", count2.toString())
-            startActivity(intent)
+            val database = Firebase.database.reference
+
+            database.child("game").child(GameCode).child("questions").get().addOnSuccessListener {
+                if (it.exists()) {
+                    val intent = Intent(this@Wait2, AnswersF::class.java)
+                    intent.putExtra("gamecode", key_pl)
+                    intent.putExtra("game", GameCode)
+                    intent.putExtra("count", count2.toString())
+                    startActivity(intent)
+
+                }
+
+            }
         }
     }
 }
