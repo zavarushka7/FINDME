@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">FIND ME</string>
+    <string name="start_button">начать игру</string>
+    <string name="connect_button">подключиться к игре</string>
+    <string name="settings_button">настройки</string>
+    <string name="change_button">изменить профиль</string>
+    <string name="volume_button">звук</string>
+    <string name="animation_button">предыстория</string>
+    <string name="friends">друзья</string>
+    <string name="strangers">незнакомцы</string>
+    <string name="select_mode">выберете режим игры</string>
+    <string name="code">код для подключения</string>
+    <string name="connect">введите код</string>
+    <string name="name">имя пользователя</string>
+    <string name="avatar">маска</string>
+    <string name="inputname">введите имя</string>
+    <string name="inputavatar">выберете маску</string>
+    <string name="wait">ожидание подключения</string>
+    <string name="save">сохранить</string>
+    <string name="connect_players">подключенные игроки</string>
+    <string name="rulesstrangers">голосование за лучший ответ. \nпобеждает тот, за чьи ответы проголосовали больше всего раз</string>
+    <string name="rulesfriends">угадывание кому принадлежит какой ответ. \nпобеждает тот, кто угадает больше игроков</string>
+</resources>
