@@ -1,5 +1,6 @@
 package com.bignerdranch.android.findme
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clearPlayers(adapter: PlayerAdapter) {
         adapter.playerList.clear()
         adapter.notifyDataSetChanged()
