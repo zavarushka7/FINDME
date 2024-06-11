@@ -1,8 +1,8 @@
 package com.bignerdranch.android.findme
 // Ожидание ответов всех игроков
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -31,10 +31,12 @@ class Ready : AppCompatActivity() {
                 if (r == count) {
                     if(mode == "friends2"){
                         val intent = Intent(this@Ready, VotingF::class.java)
+                        intent.putExtra("IDD", gameID)
                         startActivity(intent)
                     }
                     else if (mode == "strangers2"){
                         val intent = Intent(this@Ready, VotingS::class.java)
+                        intent.putExtra("IDD", gameID)
                         startActivity(intent)
                     }
                 }
