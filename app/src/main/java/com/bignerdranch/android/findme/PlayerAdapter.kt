@@ -42,6 +42,9 @@ class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
         adapter.playerList.clear()
         adapter.notifyDataSetChanged()
     }
+    fun getItem(position: Int): Player {
+        return playerList[position]
+    }
 
 }
 

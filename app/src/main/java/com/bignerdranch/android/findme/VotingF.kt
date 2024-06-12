@@ -4,17 +4,18 @@ package com.bignerdranch.android.findme
 
 import android.annotation.SuppressLint
 import android.content.ClipData
+import android.content.ClipDescription
 import android.os.Bundle
-import android.util.Log
 import android.view.DragEvent
 import android.view.DragEvent.*
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.DragShadowBuilder
-import android.view.View.INVISIBLE
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.findme.databinding.ActivityVotingBinding
 import com.google.firebase.database.DataSnapshot
@@ -37,65 +38,97 @@ class VotingF : AppCompatActivity(), View.OnTouchListener, View.OnDragListener {
     )
     private lateinit var mViewBinding: ActivityVotingBinding
     private val msg = "DragDrop"
+    private var draggedItem: String? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_voting)
         mViewBinding = ActivityVotingBinding.inflate(layoutInflater)
         setContentView(mViewBinding.root)
-        mViewBinding.but1.setOnTouchListener(this)
+
+        mViewBinding.but1.setOnDragListener(this)
         mViewBinding.but2.setOnDragListener(this)
-
-
-
-
-
+        val recyclerView: RecyclerView = mViewBinding.avatars
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if (e.action == MotionEvent.ACTION_DOWN) {
+                    val child = rv.findChildViewUnder(e.x, e.y)
+                    if (child != null) {
+                        draggedItem = adapter.getItem(rv.getChildAdapterPosition(child)).toString()
+                        val item = ClipData.Item(draggedItem)
+                        val dragData = ClipData(
+                            "dragData",
+                            arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN),
+                            item
+                        )
+                        val shadowBuilder = View.DragShadowBuilder(child)
+                        child.startDragAndDrop(dragData, shadowBuilder, child, 0)
+                        return true
+                    }
+                }
+                return false
+            }
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
         init()
     }
 
-
-
-
-
-
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        return if (event!!.action == MotionEvent.ACTION_DOWN) {
-            val data = ClipData.newPlainText("", "")
-            val shadowBuilder = DragShadowBuilder(v)
-            v?.startDragAndDrop(data, shadowBuilder, v, 0)
-            true
-        } else {
-            false
+        if (v == mViewBinding.but1 || v == mViewBinding.but2) {
+            return false // Отменяем перетаскивание для кнопок but1 и but2
         }
+        val locationBut1 = IntArray(2)
+        mViewBinding.but1.getLocationOnScreen(locationBut1)
+        val but1X = locationBut1[0]
+        val but1Y = locationBut1[1]
+        val locationBut2 = IntArray(2)
+        mViewBinding.but2.getLocationOnScreen(locationBut2)
+        val but2X = locationBut2[0] + mViewBinding.but2.width
+        val but2Y = locationBut2[1] + mViewBinding.but2.height
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                val data = ClipData.newPlainText("", "")
+                val shadowBuilder = View.DragShadowBuilder(v)
+                v?.startDragAndDrop(data, shadowBuilder, v, 0)
+                v?.visibility = View.INVISIBLE // Скрываем элемент при начале перетаскивания
+                return true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (event.rawX > but1X && event.rawX < but2X && event.rawY > but1Y && event.rawY < but2Y) {
+                    return false // Отменяем перетаскивание над кнопками but1 и but2
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                v?.visibility = View.VISIBLE // Восстанавливаем видимость элемента при завершении перетаскивания
+            }
+        }
+        return false
     }
+
     override fun onDrag(v: View?, event: DragEvent?): Boolean {
         when (event?.action) {
-            ACTION_DRAG_STARTED -> {
-                Log.d(msg, "Action is DragEvent.ACTION_DRAG_STARTED");
+            DragEvent.ACTION_DROP -> {
+                // Получаем данные из DragEvent
+                val item: ClipData.Item = event.clipData.getItemAt(0)
+                val dragData = item.text.toString()
+                if (v is ImageView) {
+                    val draggedView = event.localState as View // Получаем view, которое было перетаскиваемо
+                    val owner = draggedView.parent as ViewGroup // Получаем родительскую view
+                    owner.removeView(draggedView) // Удаляем view из родителя
+                    val container = v.parent as ViewGroup // Получаем родительскую view для целевого ImageView
+                    container.addView(draggedView) // Добавляем view в контейнер целевого ImageView
+                    draggedView.x = event.x - draggedView.width / 2 // Устанавливаем позицию по X
+                    draggedView.y = event.y - draggedView.height / 2 // Устанавливаем позицию по Y
+                    draggedView.visibility = View.VISIBLE // Делаем view видимым
+                }
             }
-            ACTION_DRAG_ENTERED -> {
-                Log.d(msg, "Action is DragEvent.ACTION_DRAG_ENTERED")
-            }
-            ACTION_DRAG_EXITED -> {
-                Log.d(msg, "Action is DragEvent.ACTION_DRAG_EXITED")
-            }
-            ACTION_DRAG_LOCATION -> {
-                Log.d(msg, "Action is DragEvent.ACTION_DRAG_LOCATION")
-            }
-            ACTION_DRAG_ENDED -> {
-                Log.d(msg, "Action is DragEvent.ACTION_DRAG_ENDED")
-            }
-            ACTION_DROP -> {
-                Log.d(msg, "ACTION_DROP event")
-                mViewBinding.but2.setImageResource(R.drawable.bigredbutton)
-                mViewBinding.but1.visibility = INVISIBLE
-                Toast.makeText(this@VotingF,"You have matched the shape!!",Toast.LENGTH_SHORT).show()
-            }
-
         }
         return true
     }
+
 
 
     private fun init() {
