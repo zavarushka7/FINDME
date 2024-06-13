@@ -16,6 +16,7 @@ class PlayerAdapter : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
         fun bind(player: Player) = with(binding){
             ava.setImageResource(player.avatar)
             nam.text = player.player
+
         }
     }
 

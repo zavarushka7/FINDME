@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -80,14 +81,17 @@ class VotingF : AppCompatActivity(), View.OnTouchListener, View.OnDragListener {
         if (v == mViewBinding.but1 || v == mViewBinding.but2) {
             return false // Отменяем перетаскивание для кнопок but1 и but2
         }
+
         val locationBut1 = IntArray(2)
         mViewBinding.but1.getLocationOnScreen(locationBut1)
         val but1X = locationBut1[0]
         val but1Y = locationBut1[1]
+
         val locationBut2 = IntArray(2)
         mViewBinding.but2.getLocationOnScreen(locationBut2)
         val but2X = locationBut2[0] + mViewBinding.but2.width
         val but2Y = locationBut2[1] + mViewBinding.but2.height
+
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 val data = ClipData.newPlainText("", "")
@@ -97,9 +101,14 @@ class VotingF : AppCompatActivity(), View.OnTouchListener, View.OnDragListener {
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                if (event.rawX > but1X && event.rawX < but2X && event.rawY > but1Y && event.rawY < but2Y) {
-                    return false // Отменяем перетаскивание над кнопками but1 и but2
+                val params = v?.layoutParams as RelativeLayout.LayoutParams
+                params.leftMargin = event.rawX.toInt()
+                if (event.rawX > but2X) {
+                    params.leftMargin = but2X - v.width // Держим элемент справа на кнопке but2
+                } else if (event.rawX < but1X) {
+                    params.leftMargin = but1X // Держим элемент справа на кнопке but1
                 }
+                v.layoutParams = params
             }
             MotionEvent.ACTION_UP -> {
                 v?.visibility = View.VISIBLE // Восстанавливаем видимость элемента при завершении перетаскивания
@@ -133,7 +142,7 @@ class VotingF : AppCompatActivity(), View.OnTouchListener, View.OnDragListener {
 
     private fun init() {
         val recyclerView: RecyclerView = mViewBinding.avatars
-        recyclerView.layoutManager = GridLayoutManager(this@VotingF, 6, GridLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = GridLayoutManager(this@VotingF, 4, GridLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
         var playerAvatar: String = ""
         var playerName: String = ""

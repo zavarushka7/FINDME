@@ -18,6 +18,7 @@ class Ready : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ready)
         val gameID = intent.getStringExtra("IDD").toString()
+        val player = intent.getStringExtra("player").toString()
         database = FirebaseDatabase.getInstance().reference.child("game").child(gameID)
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -32,11 +33,13 @@ class Ready : AppCompatActivity() {
                     if(mode == "friends2"){
                         val intent = Intent(this@Ready, VotingF::class.java)
                         intent.putExtra("IDD", gameID)
+                        intent.putExtra("player", player)
                         startActivity(intent)
                     }
                     else if (mode == "strangers2"){
                         val intent = Intent(this@Ready, VotingS::class.java)
                         intent.putExtra("IDD", gameID)
+                        intent.putExtra("player", player)
                         startActivity(intent)
                     }
                 }

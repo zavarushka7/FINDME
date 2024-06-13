@@ -2,12 +2,12 @@ package com.bignerdranch.android.findme
 // Ответы на вопросы для игрока
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,6 +39,7 @@ class AnswersF : AppCompatActivity() {
     private var currentQuestion = ""
     private var currentAnswer = ""
     private lateinit var gameID: String
+    private lateinit var player: String
     private val questions = mutableListOf<String>()
 
     @SuppressLint("MissingInflatedId")
@@ -46,6 +47,7 @@ class AnswersF : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answers)
         val ID = intent.getStringExtra("gamecode").toString() // код игрока
+        player = ID
         var game = intent.getStringExtra("game").toString() // код игры для игрока (=код админа)
         gameID = game
         val count = intent.getStringExtra("count").toString()
@@ -94,6 +96,7 @@ class AnswersF : AppCompatActivity() {
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
+            intent.putExtra("player", player)
             startActivity(intent)
 
         } else {
@@ -150,6 +153,7 @@ class AnswersF : AppCompatActivity() {
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
+            intent.putExtra("player", player)
             startActivity(intent)
         } else {
             var randomIndex = 0
@@ -212,6 +216,7 @@ class AnswersF : AppCompatActivity() {
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
+            intent.putExtra("player", player)
             startActivity(intent)
         } else {
             var randomIndex = 0
@@ -269,6 +274,7 @@ class AnswersF : AppCompatActivity() {
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
+            intent.putExtra("player", player)
             startActivity(intent)
         } else {
             var randomIndex = 0
@@ -347,6 +353,7 @@ class AnswersF : AppCompatActivity() {
             database3.child("ready").setValue(r)
             val intent = Intent(this@AnswersF, Ready::class.java)
             intent.putExtra("IDD", gameID)
+            intent.putExtra("player", player)
             startActivity(intent)
         } else {
             var randomIndex = 0
