@@ -7,7 +7,7 @@
     tools:context=".VotingS">
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/buttona1"
         android:layout_width="201dp"
         android:layout_height="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,40 +18,40 @@
         app:srcCompat="@drawable/biggreenbutton" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/buttona2"
         android:layout_width="220dp"
         android:layout_height="128dp"
         android:layout_marginBottom="280dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="@+id/buttona1"
         app:layout_constraintHorizontal_bias="0.282"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
+        app:layout_constraintStart_toStartOf="@+id/buttona1"
         app:srcCompat="@drawable/bigredbutton" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/answer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+        app:layout_constraintBottom_toBottomOf="@+id/buttona1"
+        app:layout_constraintEnd_toEndOf="@+id/buttona1"
+        app:layout_constraintStart_toStartOf="@+id/buttona1"
+        app:layout_constraintTop_toTopOf="@+id/buttona1" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/answer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton3"
-        app:layout_constraintStart_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
+        app:layout_constraintBottom_toBottomOf="@+id/buttona2"
+        app:layout_constraintEnd_toEndOf="@+id/buttona2"
+        app:layout_constraintStart_toStartOf="@+id/buttona2"
+        app:layout_constraintTop_toTopOf="@+id/buttona2" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -139,4 +139,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.04"
         app:srcCompat="@drawable/sheep" />
+
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.801" />
 </androidx.constraintlayout.widget.ConstraintLayout>

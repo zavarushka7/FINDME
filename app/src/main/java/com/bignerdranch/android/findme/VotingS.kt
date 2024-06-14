@@ -1,10 +1,12 @@
 package com.bignerdranch.android.findme
 // Голосование в режиме "Незнакомцы", в котором игроки выбирают лучший ответ из предложенных двух.
 // Баллы делятся в соотношении выбранных и начисляются авторам ответов.
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,6 +16,7 @@ import com.google.firebase.database.ValueEventListener
 
 class VotingS : AppCompatActivity() {
     private var round: Int = 1
+    private lateinit var textName: TextView
     private var name: String? = null
     private var status: String? = null
     private var playerCount: Int = 0
@@ -45,7 +48,7 @@ class VotingS : AppCompatActivity() {
         val gameID = intent.getStringExtra("IDD").toString() // код игры
         player = intent.getStringExtra("player").toString() // код игрока
 
-
+        textName = findViewById(R.id.textName)
 
         bear = findViewById(R.id.bear_av)
         sheep = findViewById(R.id.sheep_av)
@@ -60,12 +63,13 @@ class VotingS : AppCompatActivity() {
                 status = dataSnapshot.child("users").child(player!!).child("status")
                     .getValue(String::class.java).toString()
                 if (status == "player"){
-                name = dataSnapshot.child("users").child(player!!).child("name")
-                    .getValue(String::class.java).toString()} // имя этого игрока
+                    name = dataSnapshot.child("users").child(player!!).child("name")
+                        .getValue(String::class.java).toString()} // имя этого игрока
                 else {
                     name = dataSnapshot.child("users").child(gameID).child("name")
                         .getValue(String::class.java).toString() // имя админа
                 }
+                textName.text = name
                 playerCount = dataSnapshot.child("game").child(gameID).child("count")
                     .getValue(Int::class.java)!!
                 adminName = dataSnapshot.child("users").child(gameID).child("name").getValue(String::class.java).toString()

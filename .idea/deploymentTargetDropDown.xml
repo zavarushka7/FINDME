@@ -11,16 +11,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Medium_Phone_API_30_1.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Pixel_5_API_30_1.avd" />
+                  <value value="C:\Users\zavar\.android\avd\Pixel_6a_API_30_1.avd" />
                 </Key>
               </deviceKey>
             </Target>
@@ -31,7 +22,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Pixel_XL_API_30_1.avd" />
+                  <value value="C:\Users\zavar\.android\avd\Pixel_6a_API_30_1.avd" />
                 </Key>
               </deviceKey>
             </Target>
@@ -40,7 +31,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Medium_Phone_API_30_1.avd" />
+                  <value value="C:\Users\zavar\.android\avd\Pixel_6_Pro_API_30_1.avd" />
                 </Key>
               </deviceKey>
             </Target>
@@ -49,7 +40,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Pixel_5_API_30_1.avd" />
+                  <value value="C:\Users\zavar\.android\avd\Medium_Phone_API_30_3.avd" />
                 </Key>
               </deviceKey>
             </Target>
@@ -58,7 +49,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\zavar\.android\avd\Pixel_3_API_30.avd" />
+                  <value value="C:\Users\zavar\.android\avd\Pixel_7_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>
