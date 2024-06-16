@@ -57,7 +57,8 @@ class Wait2 : AppCompatActivity() {
                 adapter.clearPlayers(adapter)
                 adminName = dataSnapshot.child("users").child(GameCode).child("name").getValue(String::class.java).toString()
                 adminAvatar = dataSnapshot.child("users").child(GameCode).child("avatar").getValue(String::class.java).toString()
-                var count = dataSnapshot.child("game").child(GameCode).child("count").getValue(Int::class.java)!!
+                var count = dataSnapshot.child("game").child(GameCode).child("count")
+                    .getValue(Int::class.java)!!
                 count2 = count
                 playerList[adminName] = adminAvatar
                 for (playerSnapshot in dataSnapshot.child("game").child(GameCode)

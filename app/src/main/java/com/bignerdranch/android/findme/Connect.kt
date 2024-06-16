@@ -51,7 +51,7 @@ class Connect : AppCompatActivity() {
                             val playerCount = dataSnapshot.child(key).child("count").getValue(Int::class.java) ?: 0
                             val playerData = hashMapOf<String, Any>()
                             playerData["name"] = key_player.toString()
-                            playersRef.child("player${playerCount + 1}").setValue(playerData)
+                            playersRef.child(key_player.toString()).setValue(playerData)
 
                             val countRef = database.child(key).child("count")
                             countRef.setValue(playerCount + 1)

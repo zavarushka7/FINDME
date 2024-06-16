@@ -51,7 +51,7 @@ class AnswersF : AppCompatActivity() {
         var game = intent.getStringExtra("game").toString() // код игры для игрока (=код админа)
         gameID = game
         val count = intent.getStringExtra("count").toString()
-        database = Firebase.database.reference.child("users").child(ID)
+        database = Firebase.database.reference.child("game").child(game).child("players").child(ID)
         answer = findViewById(R.id.answers)
         nextButton = findViewById(R.id.next_question)
         database3 = FirebaseDatabase.getInstance().reference.child("game").child(game) // путь для игрока
@@ -59,7 +59,6 @@ class AnswersF : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val r1 = dataSnapshot.child("ready").getValue(Int::class.java)
                 r = r1!!
-
                 for (childSnapshot in dataSnapshot.child("questions").children) {
                     val question = childSnapshot.getValue(String::class.java)
                     if (!question.isNullOrBlank()) {

@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 
 class Ready : AppCompatActivity() {
     private lateinit var database: DatabaseReference
+    private lateinit var database2: DatabaseReference
     private lateinit var mode: String
     private var r: Int = 0
     private var count: Int = 0
@@ -20,6 +21,7 @@ class Ready : AppCompatActivity() {
         val gameID = intent.getStringExtra("IDD").toString()
         val player = intent.getStringExtra("player").toString()
         database = FirebaseDatabase.getInstance().reference.child("game").child(gameID)
+        database2 = FirebaseDatabase.getInstance().reference.child("users").child(gameID)
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val mode1 = dataSnapshot.child("mode").getValue(String::class.java)
@@ -43,6 +45,10 @@ class Ready : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
+
+
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {

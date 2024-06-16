@@ -4,7 +4,9 @@ package com.bignerdranch.android.findme
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class VotingS : AppCompatActivity() {
+    private var currentQuestionIndex = 1
+    private lateinit var Buttona1: ImageButton
+    private lateinit var Buttona2: ImageButton
+    private lateinit var a1: String
+    private lateinit var a2: String
+    private lateinit var textQuestion: TextView
+    private lateinit var textAnswer1: TextView
+    private lateinit var textAnswer2: TextView
     private var round: Int = 1
     private lateinit var textName: TextView
     private var name: String? = null
@@ -32,7 +42,12 @@ class VotingS : AppCompatActivity() {
     private lateinit var horse: ImageView
     private lateinit var bird: ImageView
     private lateinit var sheep: ImageView
-    private val playerList = mutableMapOf<String, String>() // имена и аватарки всех игроков и админа
+    private lateinit var gameRef: DatabaseReference
+    val LIST: MutableList<MutableMap<String, String>> = mutableListOf()
+    private var Questions: MutableList<String> = mutableListOf()
+    private var Answers4: MutableList<String> = mutableListOf()
+    private val playerList = mutableMapOf<String, String>() // Имена и аватарки игроков
+    private val myList = mutableListOf<String>() // Айди игроков
     private val imageIDlist = listOf(
         R.drawable.bear,
         R.drawable.horse,
@@ -46,9 +61,15 @@ class VotingS : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_voting_s)
         val gameID = intent.getStringExtra("IDD").toString() // код игры
+        myList.add(gameID)
         player = intent.getStringExtra("player").toString() // код игрока
 
         textName = findViewById(R.id.textName)
+        Buttona1 = findViewById(R.id.buttona1)
+        Buttona2 = findViewById(R.id.buttona2)
+        textQuestion = findViewById<TextView>(R.id.questionText)
+        textAnswer1 = findViewById<TextView>(R.id.answer1)
+        textAnswer2 = findViewById<TextView>(R.id.answer2)
 
         bear = findViewById(R.id.bear_av)
         sheep = findViewById(R.id.sheep_av)
@@ -58,7 +79,7 @@ class VotingS : AppCompatActivity() {
         rabbit = findViewById(R.id.rabbit_av)
 
         database = FirebaseDatabase.getInstance().reference
-        database.addValueEventListener(object : ValueEventListener {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 status = dataSnapshot.child("users").child(player!!).child("status")
                     .getValue(String::class.java).toString()
@@ -68,47 +89,85 @@ class VotingS : AppCompatActivity() {
                 else {
                     name = dataSnapshot.child("users").child(gameID).child("name")
                         .getValue(String::class.java).toString() // имя админа
+                    player = gameID
                 }
                 textName.text = name
-                playerCount = dataSnapshot.child("game").child(gameID).child("count")
-                    .getValue(Int::class.java)!!
+                playerCount = dataSnapshot.child("game").child(gameID).child("count").getValue(Int::class.java)!!
                 adminName = dataSnapshot.child("users").child(gameID).child("name").getValue(String::class.java).toString()
                 adminAvatar = dataSnapshot.child("users").child(gameID).child("avatar").getValue(String::class.java).toString()
                 playerList[adminName] = adminAvatar
+
                 for (playerSnapshot in dataSnapshot.child("game").child(gameID).child("players").children) {
                     val playerID = playerSnapshot.child("name").getValue(String::class.java)
-                    playerAvatar =
-                        dataSnapshot.child("users").child(playerID.toString()).child("avatar")
-                            .getValue(String::class.java).toString()
-                    playerName =
-                        dataSnapshot.child("users").child(playerID.toString()).child("name")
-                            .getValue(String::class.java).toString()
+                    playerAvatar = dataSnapshot.child("users").child(playerID.toString()).child("avatar").getValue(String::class.java).toString()
+                    playerName = dataSnapshot.child("users").child(playerID.toString()).child("name").getValue(String::class.java).toString()
                     playerList.put(playerName, playerAvatar)
+                    myList.add(playerID.toString())
+
+                    // Получение ответов игрока
+                    val a11 = playerSnapshot.child("a11").getValue(String::class.java).toString()
+                    val a12 = playerSnapshot.child("a12").getValue(String::class.java).toString()
+                    val a13 = playerSnapshot.child("a13").getValue(String::class.java).toString()
+                    val a14 = playerSnapshot.child("a14").getValue(String::class.java).toString()
+                    val a21 = playerSnapshot.child("a21").getValue(String::class.java).toString()
+                    val a22 = playerSnapshot.child("a22").getValue(String::class.java).toString()
+                    val a23 = playerSnapshot.child("a23").getValue(String::class.java).toString()
+                    val a24 = playerSnapshot.child("a24").getValue(String::class.java).toString()
+                    val a25 = playerSnapshot.child("a25").getValue(String::class.java).toString()
+                    val a31 = playerSnapshot.child("a31").getValue(String::class.java).toString()
+                    val a32 = playerSnapshot.child("a32").getValue(String::class.java).toString()
+                    val a33 = playerSnapshot.child("a33").getValue(String::class.java).toString()
+                    val a34 = playerSnapshot.child("a34").getValue(String::class.java).toString()
+                    val a35 = playerSnapshot.child("a35").getValue(String::class.java).toString()
+                    Answers4.add(a11)
+                    Answers4.add(a12)
+                    Answers4.add(a13)
+                    Answers4.add(a21)
+                    Answers4.add(a22)
+                    Answers4.add(a23)
+                    Answers4.add(a31)
+                    Log.d("answersERROR", Answers4.toString())
+
+
                 }
+                for (playerSnapshot in dataSnapshot.child("game").child(gameID).child("questions").children) {
+                    val q = playerSnapshot.getValue(String::class.java)
+                    Questions.add(q.toString())
+                }
+
+                for (i in 0 until Questions.size) {
+                    val question = Questions[i]
+                    // Create a map for the current question
+                    val questionMap = mutableMapOf<String, String>()
+
+                    // Iterate through the players
+                    for (j in myList.indices) {
+                        val player = myList[j]
+                        val answer = Answers4[j] // Access the answer for the current player and question
+                        // Add the player and their answer to the map
+                        questionMap[player] = answer.toString()
+                    }
+
+                    // Add the map for the current question to the main LIST
+                    LIST.add(questionMap)}
+
+                Log.d("KONEC", LIST.toString())
                 if (playerList.get(name).toString().takeLast(11) == "ar2_button}") {
                     bear.visibility = View.VISIBLE
-                }
-                else if (playerList.get(name).toString().takeLast(11) == "ep2_button}") {
+                } else if (playerList.get(name).toString().takeLast(11) == "ep2_button}") {
                     sheep.visibility = View.VISIBLE
-                }
-                else if (playerList.get(name).toString().takeLast(11) == "se2_button}") {
+                } else if (playerList.get(name).toString().takeLast(11) == "se2_button}") {
                     horse.visibility = View.VISIBLE
-                }
-                else if (playerList.get(name).toString().takeLast(11) == "it2_button}") {
+                } else if (playerList.get(name).toString().takeLast(11) == "it2_button}") {
                     rabbit.visibility = View.VISIBLE
-                }
-                else if (playerList.get(name).toString().takeLast(11) == "wl2_button}") {
+                } else if (playerList.get(name).toString().takeLast(11) == "wl2_button}") {
                     owl.visibility = View.VISIBLE
-                }
-                else if (playerList.get(name).toString().takeLast(11) == "rd2_button}") {
+                } else if (playerList.get(name).toString().takeLast(11) == "rd2_button}") {
                     bird.visibility = View.VISIBLE
                 }
             }
-
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })
-    }
-}
+        }
+        )}}
