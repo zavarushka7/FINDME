@@ -137,18 +137,13 @@ class VotingS : AppCompatActivity() {
 
                 for (i in 0 until Questions.size) {
                     val question = Questions[i]
-                    // Create a map for the current question
                     val questionMap = mutableMapOf<String, String>()
-
-                    // Iterate through the players
                     for (j in myList.indices) {
                         val player = myList[j]
-                        val answer = Answers4[j] // Access the answer for the current player and question
-                        // Add the player and their answer to the map
-                        questionMap[player] = answer.toString()
+                        val answer = Answers4[i]
+                        questionMap[question] = answer
                     }
 
-                    // Add the map for the current question to the main LIST
                     LIST.add(questionMap)}
 
                 Log.d("KONEC", LIST.toString())
