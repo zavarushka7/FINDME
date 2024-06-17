@@ -14,10 +14,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
+import kotlin.random.Random
 
 class VotingS : AppCompatActivity() {
-    private var currentQuestionIndex = 1
+    private var currentQuestionIndex = 0
     private lateinit var Buttona1: ImageButton
     private lateinit var Buttona2: ImageButton
     private lateinit var a1: String
@@ -103,50 +105,44 @@ class VotingS : AppCompatActivity() {
                     playerName = dataSnapshot.child("users").child(playerID.toString()).child("name").getValue(String::class.java).toString()
                     playerList.put(playerName, playerAvatar)
                     myList.add(playerID.toString())
-
-                    // Получение ответов игрока
-                    val a11 = playerSnapshot.child("a11").getValue(String::class.java).toString()
-                    val a12 = playerSnapshot.child("a12").getValue(String::class.java).toString()
-                    val a13 = playerSnapshot.child("a13").getValue(String::class.java).toString()
-                    val a14 = playerSnapshot.child("a14").getValue(String::class.java).toString()
-                    val a21 = playerSnapshot.child("a21").getValue(String::class.java).toString()
-                    val a22 = playerSnapshot.child("a22").getValue(String::class.java).toString()
-                    val a23 = playerSnapshot.child("a23").getValue(String::class.java).toString()
-                    val a24 = playerSnapshot.child("a24").getValue(String::class.java).toString()
-                    val a25 = playerSnapshot.child("a25").getValue(String::class.java).toString()
-                    val a31 = playerSnapshot.child("a31").getValue(String::class.java).toString()
-                    val a32 = playerSnapshot.child("a32").getValue(String::class.java).toString()
-                    val a33 = playerSnapshot.child("a33").getValue(String::class.java).toString()
-                    val a34 = playerSnapshot.child("a34").getValue(String::class.java).toString()
-                    val a35 = playerSnapshot.child("a35").getValue(String::class.java).toString()
-                    Answers4.add(a11)
-                    Answers4.add(a12)
-                    Answers4.add(a13)
-                    Answers4.add(a21)
-                    Answers4.add(a22)
-                    Answers4.add(a23)
-                    Answers4.add(a31)
-                    Log.d("answersERROR", Answers4.toString())
+                    Log.d("ktoKOKO", playerID.toString())
+                    Log.d("pocenuKOKO", myList.toString())
 
 
                 }
                 for (playerSnapshot in dataSnapshot.child("game").child(gameID).child("questions").children) {
                     val q = playerSnapshot.getValue(String::class.java)
                     Questions.add(q.toString())
+                    Log.d("KIKI", q.toString())
                 }
 
-                for (i in 0 until Questions.size) {
-                    val question = Questions[i]
-                    val questionMap = mutableMapOf<String, String>()
-                    for (j in myList.indices) {
-                        val player = myList[j]
-                        val answer = Answers4[i]
-                        questionMap[question] = answer
-                    }
+                for (pl in myList){
+                    Log.d("KDRTC", pl)
+                    val userNode = dataSnapshot.child("users").child(pl)
 
-                    LIST.add(questionMap)}
+                    // Извлеките данные из узла
+                    var qa11 = userNode.child("a11").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa12 = userNode.child("a12").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa13 = userNode.child("a13").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa21 = userNode.child("a21").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa22 = userNode.child("a22").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa23 = userNode.child("a23").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa31 = userNode.child("a31").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    var qa32 = userNode.child("a32").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                    Log.d("CHTOOO", qa11.toString())
+                    LIST.add(qa11 as MutableMap<String, String>)
+                    LIST.add(qa12 as MutableMap<String, String>)
+                    LIST.add(qa13 as MutableMap<String, String>)
+                    LIST.add(qa21 as MutableMap<String, String>)
+                    LIST.add(qa22 as MutableMap<String, String>)
+                    LIST.add(qa23 as MutableMap<String, String>)
+                    LIST.add(qa31 as MutableMap<String, String>)
+                    LIST.add(qa32 as MutableMap<String, String>)
+                    Log.d("LISTTLOL", LIST.toString())
 
-                Log.d("KONEC", LIST.toString())
+                }
+
+
                 if (playerList.get(name).toString().takeLast(11) == "ar2_button}") {
                     bear.visibility = View.VISIBLE
                 } else if (playerList.get(name).toString().takeLast(11) == "ep2_button}") {
@@ -160,9 +156,44 @@ class VotingS : AppCompatActivity() {
                 } else if (playerList.get(name).toString().takeLast(11) == "rd2_button}") {
                     bird.visibility = View.VISIBLE
                 }
+                updateQuestion()
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+        })
+    }
+    private fun updateQuestion() {
+        // Проверяем, не закончились ли вопросы
+        if (currentQuestionIndex < Questions.size) {
+            // Получаем текущий вопрос
+            val currentQuestion = Questions[currentQuestionIndex]
+
+            // Перемешиваем LIST (это нужно делать для каждого вопроса)
+            LIST.shuffle(Random(System.currentTimeMillis()))
+
+            // Устанавливаем текст вопроса
+            textQuestion.text = currentQuestion
+
+            // Получаем ответы от первых двух игроков
+            textAnswer1.text = LIST[0].values.first().toString()
+            textAnswer2.text = LIST[1].values.first().toString()
+
+            // Устанавливаем обработчики кликов для кнопок
+            Buttona1.setOnClickListener {
+                // Переходим к следующему вопросу
+                currentQuestionIndex++
+                updateQuestion()
+            }
+
+            Buttona2.setOnClickListener {
+                // Переходим к следующему вопросу
+                currentQuestionIndex++
+                updateQuestion()
+            }
+
+        } else {
+            // Обработка окончания игры (например, показать сообщение "Игра окончена!")
         }
-        )}}
+    }
+}
