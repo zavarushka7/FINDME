@@ -2,7 +2,7 @@ package com.bignerdranch.android.findme
 // Голосование в режиме "Незнакомцы", в котором игроки выбирают лучший ответ из предложенных двух.
 // Баллы делятся в соотношении выбранных и начисляются авторам ответов.
 
-import android.annotation.SuppressLint
+
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -58,7 +58,7 @@ class VotingS : AppCompatActivity() {
         R.drawable.bird,
         R.drawable.sheep
     )
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_voting_s)
@@ -111,36 +111,67 @@ class VotingS : AppCompatActivity() {
 
                 }
                 for (playerSnapshot in dataSnapshot.child("game").child(gameID).child("questions").children) {
-                    val q = playerSnapshot.getValue(String::class.java)
+                    val q = playerSnapshot.child("val").getValue(String::class.java)
                     Questions.add(q.toString())
                     Log.d("KIKI", q.toString())
                 }
+                val usersRef = FirebaseDatabase.getInstance().getReference("users")
 
-                for (pl in myList){
-                    Log.d("KDRTC", pl)
-                    val userNode = dataSnapshot.child("users").child(pl)
+                for (pl in myList) {
+                    val userNode = usersRef.child(pl)
 
-                    // Извлеките данные из узла
-                    var qa11 = userNode.child("a11").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa12 = userNode.child("a12").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa13 = userNode.child("a13").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa21 = userNode.child("a21").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa22 = userNode.child("a22").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa23 = userNode.child("a23").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa31 = userNode.child("a31").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    var qa32 = userNode.child("a32").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
-                    Log.d("CHTOOO", qa11.toString())
-                    LIST.add(qa11 as MutableMap<String, String>)
-                    LIST.add(qa12 as MutableMap<String, String>)
-                    LIST.add(qa13 as MutableMap<String, String>)
-                    LIST.add(qa21 as MutableMap<String, String>)
-                    LIST.add(qa22 as MutableMap<String, String>)
-                    LIST.add(qa23 as MutableMap<String, String>)
-                    LIST.add(qa31 as MutableMap<String, String>)
-                    LIST.add(qa32 as MutableMap<String, String>)
-                    Log.d("LISTTLOL", LIST.toString())
+                    userNode.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val qa11 = dataSnapshot.child("a11").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa11 != null) {
+                                Log.d("CHTOOO", qa11.toString())
+                                LIST.add(qa11 as MutableMap<String, String>)
+                            }
+                            var qa12 = dataSnapshot.child("a12").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa12 != null) {
+                                Log.d("CHTOOO", qa12.toString())
+                                LIST.add(qa12 as MutableMap<String, String>)
+                            }
+                            var qa13 = dataSnapshot.child("a13").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa13 != null) {
+                                Log.d("CHTOOO", qa13.toString())
+                                LIST.add(qa13 as MutableMap<String, String>)
+                            }
+                            var qa21 = dataSnapshot.child("a21").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa21 != null) {
+                                Log.d("CHTOOO", qa21.toString())
+                                LIST.add(qa21 as MutableMap<String, String>)
+                            }
+                            var qa22 = dataSnapshot.child("a22").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa22 != null) {
+                                Log.d("CHTOOO", qa22.toString())
+                                LIST.add(qa22 as MutableMap<String, String>)
+                            }
+                            var qa23 = dataSnapshot.child("a23").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa23 != null) {
+                                Log.d("CHTOOO", qa23.toString())
+                                LIST.add(qa23 as MutableMap<String, String>)
+                            }
+                            var qa31 = dataSnapshot.child("a31").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa31 != null) {
+                                Log.d("CHTOOO", qa31.toString())
+                                LIST.add(qa31 as MutableMap<String, String>)
+                            }
+                            var qa32 = dataSnapshot.child("a32").getValue(object : GenericTypeIndicator<Map<String, String>>() {})
+                            if (qa32 != null) {
+                                Log.d("CHTOOO", qa32.toString())
+                                LIST.add(qa32 as MutableMap<String, String>)
+                            }
 
+                            Log.d("LISTTLOL", LIST.toString())
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            // Обработка ошибок
+                        }
+                    })
                 }
+
 
 
                 if (playerList.get(name).toString().takeLast(11) == "ar2_button}") {

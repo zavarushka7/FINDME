@@ -1,7 +1,6 @@
 package com.bignerdranch.android.findme
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -146,10 +145,25 @@ class Wait : AppCompatActivity() {
                     else -> listOf() // По умолчанию пустой список, если playerCount2 не соответствует ни одному из условий
                 }
 
+                val random = java.util.Random()
+
                 val database = Firebase.database.reference.child("game").child(ID).child("questions")
+
                 for (i in 0 until randomQuestions.size) {
-                    database.child("w${i + 1}").setValue(randomQuestions[i])
+                    val randomNumber1 = random.nextInt(4)
+                    var randomNumber2 = random.nextInt(4)
+                    while (randomNumber2 == randomNumber1) {
+                        randomNumber2 = random.nextInt(4)
+                    }
+
+                    database.child("w${i + 1}").setValue(hashMapOf(
+                        "val" to randomQuestions[i],
+                        "w1" to randomNumber1,
+                        "w2" to randomNumber2
+                    ))
                 }
+
+
 
                 startActivity(intent)
             }

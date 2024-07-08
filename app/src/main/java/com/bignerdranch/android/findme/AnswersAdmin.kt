@@ -3,6 +3,7 @@ package com.bignerdranch.android.findme
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -440,14 +441,14 @@ class AnswersAdmin : AppCompatActivity() {
         // Загрузка вопросов из Firebase
         database3.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                r = dataSnapshot.child("ready").getValue(Int::class.java) ?: 0
+                r = dataSnapshot.child("ready").getValue(Int::class.java)!!
 
                 // Загрузка вопросов
                 for (childSnapshot in dataSnapshot.child("questions").children) {
-                    val question = childSnapshot.getValue(String::class.java)
-                    if (!question.isNullOrBlank()) {
-                        questions.add(question)
-                    }
+                    val question = childSnapshot.child("val").getValue(String::class.java)
+                    Log.d("KIДЩДKI", question.toString())
+                    questions.add(question.toString())
+
                 }
 
                 // Отображение первого вопроса
